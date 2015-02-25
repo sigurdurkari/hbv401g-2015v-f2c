@@ -37,6 +37,28 @@ public class Roster {
 		players.remove(player);
 	}
 	
+	public boolean isLegal() {
+		if(players.size()!=14) {
+			return false;
+		}
+		if(getPositionCount(PlayerPosition.GOAL) < MIN_GOAL) {
+			return false;
+		}
+		if(getPositionCount(PlayerPosition.DEFENCE) < MIN_DEFENCE) {
+			return false;
+		}
+		if(getPositionCount(PlayerPosition.MIDFIELD) < MIN_MIDFIELD) {
+			return false;
+		}
+		if(getPositionCount(PlayerPosition.FORWARD) < MIN_FORWARD) {
+			return false;
+		}
+		if(getPositionCount(PlayerPosition.DEFENCE) + getPositionCount(PlayerPosition.MIDFIELD) < MIN_DEF_AND_MID) {
+			return false;
+		}
+		return true;
+	}
+	
 	public int getPositionCount(PlayerPosition position) {
 		int count = 0;
 		for(Player p : players) {

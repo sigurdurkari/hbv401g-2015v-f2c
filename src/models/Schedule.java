@@ -10,6 +10,10 @@ public class Schedule {
 
 	public Schedule() {}
 	
+	public Schedule(List<Team> teams) {
+		this.teams = teams;
+	}
+	
 	public void makeSchedule() {
 		matches = new ArrayList<>();
 		Team ghost = new Team("ghost");
