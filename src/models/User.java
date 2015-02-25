@@ -7,14 +7,14 @@ public class User {
 	
 	private Integer userScore;
 	private Integer financialStatus;
-	private String rosterName;
+	private Roster roster;
 	
 	public User() {}
 
-	public User(Integer userScore, Integer financialStatus, String rosterName) {
+	public User(Integer userScore, Integer financialStatus, Roster roster) {
 		this.userScore = userScore;
 		this.financialStatus = financialStatus;
-		this.rosterName = rosterName;
+		this.roster = roster;
 	}
 
 	public Integer getUserScore() {
@@ -33,12 +33,12 @@ public class User {
 		this.financialStatus = financialStatus;
 	}
 
-	public String getRosterName() {
-		return rosterName;
+	public Roster getRoster() {
+		return roster;
 	}
 
-	public void setRosterName(String rosterName) {
-		this.rosterName = rosterName;
+	public void setRoster(Roster roster) {
+		this.roster = roster;
 	}
 	
 	public void updateFinancialStatus(int diff) {

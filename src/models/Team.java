@@ -37,5 +37,15 @@ public class Team {
 	public void removePlayer(Player player) {
 		players.remove(player);
 	}
+	
+	public List<Player> getPlayersByPosition(PlayerPosition pos) {
+		List<Player> playersByPos = new ArrayList<>();
+		for(Player p : players) {
+			if(p.getPosition()==pos) {
+				playersByPos.add(p);
+			}
+		}
+		return playersByPos;
+	}
 
 }

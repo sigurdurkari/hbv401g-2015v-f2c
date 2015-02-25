@@ -12,13 +12,13 @@ public class Roster {
 	public int MIN_FORWARD = 1;
 	public PlayerPosition[] positions = new PlayerPosition[] {PlayerPosition.GOAL, PlayerPosition.DEFENCE, PlayerPosition.MIDFIELD, PlayerPosition.FORWARD};
 	
+	private String name;
 	private List<Player> players = new ArrayList<>();
-	private User owner;
 	
 	public Roster() {}
 	
-	public Roster(User owner) {
-		this.owner = owner;
+	public Roster(String name) {
+		this.name = name;
 	}
 
 	public List<Player> getPlayers() {
@@ -29,14 +29,6 @@ public class Roster {
 		this.players = players;
 	}
 
-	public User getOwner() {
-		return owner;
-	}
-
-	public void setOwner(User owner) {
-		this.owner = owner;
-	}
-	
 	public void addPlayer(Player player) {
 		players.add(player);
 	}
@@ -51,6 +43,16 @@ public class Roster {
 			count += p.getPosition()==position ? 1 : 0;
 		}
 		return count;
+	}
+	
+	public List<Player> getPlayersByPosition(PlayerPosition pos) {
+		List<Player> playersByPos = new ArrayList<>();
+		for(Player p : players) {
+			if(p.getPosition()==pos) {
+				playersByPos.add(p);
+			}
+		}
+		return playersByPos;
 	}
 
 }
