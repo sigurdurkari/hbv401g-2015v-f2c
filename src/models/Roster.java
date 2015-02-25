@@ -5,6 +5,13 @@ import java.util.ArrayList;
 
 public class Roster {
 	
+	public int MIN_GOAL = 1;
+	public int MIN_DEFENCE = 3;
+	public int MIN_MIDFIELD = 3;
+	public int MIN_DEF_AND_MID = 7;
+	public int MIN_FORWARD = 1;
+	public PlayerPosition[] positions = new PlayerPosition[] {PlayerPosition.GOAL, PlayerPosition.DEFENCE, PlayerPosition.MIDFIELD, PlayerPosition.FORWARD};
+	
 	private List<Player> players = new ArrayList<>();
 	private User owner;
 	
