@@ -45,7 +45,7 @@ public class User {
 		setFinancialStatus(getFinancialStatus() + diff);
 	}
 	
-	public static int getPosCount(ArrayList<Player> players, PlayerPosition pos) {
+	public static int getPosCount(List<Player> players, PlayerPosition pos) {
 		int count = 0;
 		for(Player p : players) {
 			count += p.getPosition()==pos ? 1 : 0;
@@ -53,7 +53,7 @@ public class User {
 		return count;
 	}
 	
-	public static int priceOfPlayers(ArrayList<Player> players) {
+	public static int priceOfPlayers(List<Player> players) {
 		int price = 0;
 		for(Player p : players) {
 			price += p.getPrice();
@@ -61,7 +61,7 @@ public class User {
 		return price;
 	}
 	
-	public boolean isBuyLegal(Roster roster, ArrayList<Player> in, ArrayList<Player> out) {
+	public boolean isBuyLegal(Roster roster, List<Player> in, List<Player> out) {
 		if(in.size()!=out.size() || in.size()>3 || out.size()>3) {
 			return false;
 		}
