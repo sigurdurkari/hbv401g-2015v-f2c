@@ -4,6 +4,8 @@ import java.util.*;
 
 public class Game {
 	
+	public static Integer STARTING_CASH = 10000000;
+	
 	private Integer userCount;
 	private List<User> users = new ArrayList<>();
 	

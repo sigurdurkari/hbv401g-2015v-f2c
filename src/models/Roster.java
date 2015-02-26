@@ -5,12 +5,12 @@ import java.util.ArrayList;
 
 public class Roster {
 	
-	public int MIN_GOAL = 1;
-	public int MIN_DEFENCE = 3;
-	public int MIN_MIDFIELD = 3;
-	public int MIN_DEF_AND_MID = 7;
-	public int MIN_FORWARD = 1;
-	public PlayerPosition[] positions = new PlayerPosition[] {PlayerPosition.GOAL, PlayerPosition.DEFENCE, PlayerPosition.MIDFIELD, PlayerPosition.FORWARD};
+	public static int MIN_GOAL = 1;
+	public static int MIN_DEFENCE = 3;
+	public static int MIN_MIDFIELD = 3;
+	public static int MIN_DEF_AND_MID = 7;
+	public static int MIN_FORWARD = 1;
+	public static PlayerPosition[] positions = new PlayerPosition[] {PlayerPosition.GOAL, PlayerPosition.DEFENCE, PlayerPosition.MIDFIELD, PlayerPosition.FORWARD};
 	
 	private String name;
 	private List<Player> players = new ArrayList<>();
