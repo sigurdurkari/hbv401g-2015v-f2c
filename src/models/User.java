@@ -5,16 +5,26 @@ import java.util.ArrayList;
 
 public class User {
 	
+	private String userName;
 	private Integer userScore;
 	private Integer financialStatus;
 	private Roster roster;
 	
 	public User() {}
 
-	public User(Integer userScore, Integer financialStatus, Roster roster) {
+	public User(String userName, Integer userScore, Integer financialStatus, Roster roster) {
+		this.userName = userName;
 		this.userScore = userScore;
 		this.financialStatus = financialStatus;
 		this.roster = roster;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public Integer getUserScore() {
