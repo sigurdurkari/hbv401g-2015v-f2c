@@ -71,26 +71,30 @@ public class User {
 		return price;
 	}
 	
-	public boolean isBuyLegal(Roster roster, List<Player> in, List<Player> out) {
+	public static boolean isBuyLegal(User user, List<Player> in, List<Player> out) {
+		Roster roster = user.getRoster();
+		
+		int keeperCount = roster.getPositionCount(PlayerPosition.GOAL) + getPosCount(in, PlayerPosition.GOAL) - getPosCount(out, PlayerPosition.GOAL);
+		int defCount = roster.getPositionCount(PlayerPosition.DEFENCE) + getPosCount(in, PlayerPosition.DEFENCE) - getPosCount(out, PlayerPosition.DEFENCE);
+		int midCount = roster.getPositionCount(PlayerPosition.MIDFIELD) + getPosCount(in, PlayerPosition.MIDFIELD) - getPosCount(out, PlayerPosition.MIDFIELD);
+		int forwardCount = roster.getPositionCount(PlayerPosition.FORWARD) + getPosCount(in, PlayerPosition.FORWARD) - getPosCount(out, PlayerPosition.FORWARD);
+		
 		if(in.size()!=out.size() || in.size()>3 || out.size()>3) {
 			return false;
 		}
-		if(roster.getPositionCount(PlayerPosition.GOAL) + getPosCount(in, PlayerPosition.GOAL) - getPosCount(out, PlayerPosition.GOAL) < roster.MIN_GOAL) {
+		if(keeperCount < Roster.MIN_GOAL || keeperCount > Roster.MAX_GOAL) {
 			return false;
 		}
-		if(roster.getPositionCount(PlayerPosition.DEFENCE) + getPosCount(in, PlayerPosition.DEFENCE) - getPosCount(out, PlayerPosition.DEFENCE) < roster.MIN_DEFENCE) {
+		if(defCount < Roster.MIN_DEFENCE || defCount > Roster.MAX_DEFENCE) {
 			return false;
 		}
-		if(roster.getPositionCount(PlayerPosition.MIDFIELD) + getPosCount(in, PlayerPosition.MIDFIELD) - getPosCount(out, PlayerPosition.MIDFIELD) < roster.MIN_MIDFIELD) {
+		if(midCount < Roster.MIN_MIDFIELD || midCount > Roster.MAX_MIDFIELD) {
 			return false;
 		}
-		if(roster.getPositionCount(PlayerPosition.FORWARD) + getPosCount(in, PlayerPosition.FORWARD) - getPosCount(out, PlayerPosition.FORWARD) < roster.MIN_FORWARD) {
+		if(forwardCount < Roster.MIN_FORWARD || forwardCount > Roster.MAX_FORWARD) {
 			return false;
 		}
-		if(roster.getPositionCount(PlayerPosition.DEFENCE) + roster.getPositionCount(PlayerPosition.MIDFIELD) + getPosCount(in, PlayerPosition.DEFENCE) + getPosCount(in, PlayerPosition.MIDFIELD) - getPosCount(out, PlayerPosition.DEFENCE) - getPosCount(out, PlayerPosition.MIDFIELD) < roster.MIN_DEF_AND_MID) {
-			return false;
-		}
-		if(priceOfPlayers(in)-priceOfPlayers(out) > financialStatus) {
+		if(priceOfPlayers(in)-priceOfPlayers(out) > user.getFinancialStatus()) {
 			return false;
 		}
 		return true;

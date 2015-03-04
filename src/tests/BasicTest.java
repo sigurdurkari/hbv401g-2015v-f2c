@@ -30,7 +30,10 @@ public class BasicTest {
 	@Test
 	public void purchaseTest() {
 		List<Player> in = new ArrayList<>();
-		
+		for(Player p : testGame.getTeams().get(0).getPlayersByPosition(PlayerPosition.GOAL).subList(0, 3)) {
+			in.add(p);
+		}
+		assertEquals(false, User.isBuyLegal(testGame.getUsers().get(0), in, testGame.getUsers().get(0).getRoster().getPlayersByPosition(PlayerPosition.DEFENCE).subList(0, 3)));
 		
 	}
 

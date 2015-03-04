@@ -6,10 +6,13 @@ import java.util.ArrayList;
 public class Roster {
 	
 	public static int MIN_GOAL = 1;
+	public static int MAX_GOAL = 4;
 	public static int MIN_DEFENCE = 3;
+	public static int MAX_DEFENCE = 8;
 	public static int MIN_MIDFIELD = 3;
-	public static int MIN_DEF_AND_MID = 7;
+	public static int MAX_MIDFIELD = 8;
 	public static int MIN_FORWARD = 1;
+	public static int MAX_FORWARD = 6;
 	public static PlayerPosition[] positions = new PlayerPosition[] {PlayerPosition.GOAL, PlayerPosition.DEFENCE, PlayerPosition.MIDFIELD, PlayerPosition.FORWARD};
 	
 	private String name;
@@ -18,6 +21,14 @@ public class Roster {
 	public Roster() {}
 	
 	public Roster(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
 		this.name = name;
 	}
 
@@ -41,19 +52,16 @@ public class Roster {
 		if(players.size()!=14) {
 			return false;
 		}
-		if(getPositionCount(PlayerPosition.GOAL) < MIN_GOAL) {
+		if(getPositionCount(PlayerPosition.GOAL) < MIN_GOAL || getPositionCount(PlayerPosition.GOAL) > MAX_GOAL) {
 			return false;
 		}
-		if(getPositionCount(PlayerPosition.DEFENCE) < MIN_DEFENCE) {
+		if(getPositionCount(PlayerPosition.DEFENCE) < MIN_DEFENCE || getPositionCount(PlayerPosition.DEFENCE) > MAX_DEFENCE) {
 			return false;
 		}
-		if(getPositionCount(PlayerPosition.MIDFIELD) < MIN_MIDFIELD) {
+		if(getPositionCount(PlayerPosition.MIDFIELD) < MIN_MIDFIELD || getPositionCount(PlayerPosition.MIDFIELD) > MAX_MIDFIELD) {
 			return false;
 		}
-		if(getPositionCount(PlayerPosition.FORWARD) < MIN_FORWARD) {
-			return false;
-		}
-		if(getPositionCount(PlayerPosition.DEFENCE) + getPositionCount(PlayerPosition.MIDFIELD) < MIN_DEF_AND_MID) {
+		if(getPositionCount(PlayerPosition.FORWARD) < MIN_FORWARD || getPositionCount(PlayerPosition.FORWARD) > MAX_FORWARD) {
 			return false;
 		}
 		return true;
