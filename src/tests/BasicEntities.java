@@ -17,6 +17,11 @@ public class BasicEntities {
 			team2.addPlayer(new Player("UnitedPlayer" + i, "Manchester United", Roster.positions[(i+1)%4], 100*(i%7 + 1)));
 		}
 		teams.add(team2);
+		Team team3 = new Team("Manchester Shitty");
+		for(int i=0; i<20; i++) {
+			team3.addPlayer(new Player("ShittyPlayer" + i, "Manchester Shitty", Roster.positions[(3*i+1)%4], 100*(i%3 + 3)));
+		}
+		teams.add(team3);
 		
 		List<Player> goalkeepers = new ArrayList<>();
 		List<Player> defenders = new ArrayList<>();
@@ -30,7 +35,7 @@ public class BasicEntities {
 		}
 		
 		List<User> users = new ArrayList<>();
-		User user1 = new User("Siggi", 0, Game.STARTING_CASH, new Roster());
+		User user1 = new User("Siggi", 0, Game.STARTING_CASH, new Roster("The Mighty Ducks"));
 		for(int i=0; i<14; i++) {
 			if(i<2) {
 				user1.getRoster().addPlayer(goalkeepers.get((3*i+7)%goalkeepers.size()));
@@ -43,6 +48,20 @@ public class BasicEntities {
 			}
 		}
 		users.add(user1);
+		User user2 = new User("Guðjón", 0, Game.STARTING_CASH, new Roster("Hver er Asswraith?"));
+		for(int i=0; i<14; i++) {
+			if(i<1) {
+				user2.getRoster().addPlayer(goalkeepers.get((4*i+5)%goalkeepers.size()));
+			} else if(i<4) {
+				user2.getRoster().addPlayer(defenders.get((4*i+5)%defenders.size()));
+			} else if(i<11) {
+				user2.getRoster().addPlayer(midfielders.get((4*i+5)%midfielders.size()));
+			} else {
+				user2.getRoster().addPlayer(forwards.get((4*i+5)%forwards.size()));
+			}
+		}
+		users.add(user2);
+		
 		
 		Game testGame = new Game(users, teams);
 		
