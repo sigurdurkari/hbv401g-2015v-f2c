@@ -12,7 +12,7 @@ public class Game {
 	private List<Team> teams = new ArrayList<>();
 	private Schedule schedule;
 
-	private int activeRound = 9000;
+	private int activeRound = 0;
 	private int activeUser = 0;
 	
 	public Game() {}
