@@ -14,7 +14,7 @@ public class BasicEntities {
 		teams.add(team1);
 		
 		List<User> users = new ArrayList<>();
-		User user1 = new User(0, Game.STARTING_CASH, new Roster());
+		User user1 = new User("Siggi", 0, Game.STARTING_CASH, new Roster());
 		users.add(user1);
 		
 		Game testGame = new Game(users, teams);
