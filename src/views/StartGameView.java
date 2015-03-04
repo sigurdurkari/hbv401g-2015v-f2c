@@ -52,7 +52,7 @@ public class StartGameView extends JFrame {
 				List<Team> teams = new ArrayList<>();
 				List<User> users = new ArrayList<>();
 				for(int i=0; i<userCount; i++) {
-					User u = new User(new Integer(0), Game.STARTING_CASH, new Roster());
+					User u = new User("", new Integer(0), Game.STARTING_CASH, new Roster());
 					users.add(u);
 				}
 				Game game = new Game(users, teams);
