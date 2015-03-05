@@ -55,6 +55,22 @@ public class BasicTest {
 		out = testGame.getUsers().get(0).getRoster().getPlayersByPosition(PlayerPosition.DEFENCE).subList(0, 3);
 		assertEquals(false, User.isBuyLegal(testGame.getUsers().get(0), in, out));
 	}
+	
+	@Test
+	public void makePurchaseTest() {
+		User user = testGame.getUsers().get(0);
+		List<Player> in = testGame.getTeams().get(0).getPlayersByPosition(PlayerPosition.DEFENCE).subList(0, 3);
+		List<Player> out = testGame.getUsers().get(0).getRoster().getPlayersByPosition(PlayerPosition.DEFENCE).subList(0, 3);
+		
+		user.makePurchase(in, out);
+		
+		for(Player p : in) {
+			assertEquals(true, user.getRoster().contains(p));
+		}
+		for(Player p : out) {
+			assertEquals(false, user.getRoster().contains(p));
+		}
+	}
 
 	@Test
 	public void financialStatusTest() {

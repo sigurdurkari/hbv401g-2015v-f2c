@@ -48,6 +48,10 @@ public class Roster {
 		players.remove(player);
 	}
 	
+	public boolean contains(Player player) {
+		return players.contains(player);
+	}
+	
 	public boolean isLegal() {
 		if(players.size()!=14) {
 			return false;

@@ -100,4 +100,13 @@ public class User {
 		return true;
 	}
 	
+	public void makePurchase(List<Player> in, List<Player> out) {
+		for(Player p : out) {
+			roster.removePlayer(p);
+		}
+		for(Player p : in) {
+			roster.addPlayer(p);
+		}
+	}
+	
 }
