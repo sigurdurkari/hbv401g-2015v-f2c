@@ -11,7 +11,7 @@ public class BasicEntities {
 		for(int i=0; i<20; i++) {
 			team1.addPlayer(new Player("LiverpoolPlayer" + i, "Liverpool", Roster.positions[i%4], 100*(i%6 + 1)));
 		}
-		team1.addPlayer(new Player("Torres", "Liverpool", PlayerPosition.FORWARD, 100000000));
+		team1.addPlayer(new Player("Andy Carroll", "Liverpool", PlayerPosition.FORWARD, 50000000));
 		teams.add(team1);
 		
 		Team team2 = new Team("Manchester United");
