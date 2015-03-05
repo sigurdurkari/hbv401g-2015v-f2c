@@ -96,6 +96,7 @@ public class BasicEntities {
 			user1.updateFinancialStatus(-player.getPrice());
 		}
 		users.add(user1);
+		
 		User user2 = new User("Guðjón", 0, Game.STARTING_CASH, new Roster("Hver er Asswraith?"));
 		for(int i=0; i<14; i++) {
 			Player player = new Player();
@@ -113,6 +114,39 @@ public class BasicEntities {
 		}
 		users.add(user2);
 		
+		User user3 = new User("Kristrún", 0, Game.STARTING_CASH, new Roster("Tímon"));
+		for(int i=0; i<14; i++) {
+			Player player = new Player();
+			if(i<1) {
+				player = goalkeepers.get((3*i+7)%goalkeepers.size());
+			} else if(i<4) {
+				player = defenders.get((3*i+7)%defenders.size());
+			} else if(i<11) {
+				player = midfielders.get((3*i+7)%midfielders.size());
+			} else {
+				player = forwards.get((3*i+7)%forwards.size());
+			}
+			user3.getRoster().addPlayer(player);
+			user3.updateFinancialStatus(-player.getPrice());
+		}
+		users.add(user3);
+		
+		User user4 = new User("Marelle", 0, Game.STARTING_CASH, new Roster("The Magnificent Players"));
+		for(int i=0; i<14; i++) {
+			Player player = new Player();
+			if(i<2) {
+				player = goalkeepers.get((4*i+5)%goalkeepers.size());
+			} else if(i<7) {
+				player = defenders.get((4*i+5)%defenders.size());
+			} else if(i<12) {
+				player = midfielders.get((4*i+5)%midfielders.size());
+			} else {
+				player = forwards.get((4*i+5)%forwards.size());
+			}
+			user4.getRoster().addPlayer(player);
+			user4.updateFinancialStatus(-player.getPrice());
+		}
+		users.add(user4);
 		
 		Game testGame = new Game(users, teams);
 		
