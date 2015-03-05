@@ -29,12 +29,18 @@ public class BasicTest {
 	
 	@Test
 	public void purchaseTest() {
+		// No actual purchase
+		assertEquals(true, User.isBuyLegal(testGame.getUsers().get(0), new ArrayList<Player>(), new ArrayList<Player>()));
+		// Too many goalkeepers
+		assertEquals(false, User.isBuyLegal(testGame.getUsers().get(0), testGame.getTeams().get(0).getPlayersByPosition(PlayerPosition.GOAL).subList(0, 3), testGame.getUsers().get(0).getRoster().getPlayersByPosition(PlayerPosition.DEFENCE).subList(0, 3)));
+		// Too expensive players
 		List<Player> in = new ArrayList<>();
-		for(Player p : testGame.getTeams().get(0).getPlayersByPosition(PlayerPosition.GOAL).subList(0, 3)) {
-			in.add(p);
-		}
-		assertEquals(false, User.isBuyLegal(testGame.getUsers().get(0), in, testGame.getUsers().get(0).getRoster().getPlayersByPosition(PlayerPosition.DEFENCE).subList(0, 3)));
-		
+		in.add(testGame.getTeams().get(0).getPlayers().get(testGame.getTeams().get(0).getPlayers().size()-1));
+		assertEquals(false, User.isBuyLegal(testGame.getUsers().get(0), in, testGame.getUsers().get(0).getRoster().getPlayers().subList(6, 7)));
 	}
 
+	@Test
+	public void test() {
+		
+	}
 }
