@@ -70,6 +70,7 @@ public class BasicTest {
 		for(Player p : out) {
 			assertEquals(false, user.getRoster().contains(p));
 		}
+		assertEquals(true, user.getRoster().isLegal());
 	}
 
 	@Test

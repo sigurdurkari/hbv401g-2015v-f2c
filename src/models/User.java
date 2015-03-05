@@ -107,6 +107,7 @@ public class User {
 		for(Player p : in) {
 			roster.addPlayer(p);
 		}
+		updateFinancialStatus(priceOfPlayers(in)-priceOfPlayers(out));
 	}
 	
 }
