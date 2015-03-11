@@ -65,11 +65,14 @@ public class BasicTest {
 		user.makePurchase(in, out);
 		
 		for(Player p : in) {
+			// Check if the players we bought are in the roster
 			assertEquals(true, user.getRoster().contains(p));
 		}
 		for(Player p : out) {
+			// Check if the players we sold are not in the roster
 			assertEquals(false, user.getRoster().contains(p));
 		}
+		// Check if the roster is legal
 		assertEquals(true, user.getRoster().isLegal());
 	}
 
