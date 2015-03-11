@@ -28,7 +28,7 @@ public class BasicTest {
 	}
 	
 	@Test
-	public void purchaseTest() {
+	public void legalPurchaseTest() {
 		List<Player> in = new ArrayList<>();
 		List<Player> out = new ArrayList<>();
 		// No actual purchase
