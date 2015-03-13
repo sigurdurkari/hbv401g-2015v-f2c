@@ -24,16 +24,16 @@ public class MakePurchaseTest {
 	@Test
 	public void makePurchaseTest() {
 		User user = testGame.getUsers().get(0);
-		List<Player> in = testGame.getTeams().get(0).getPlayersByPosition(PlayerPosition.DEFENCE).subList(0, 3);
-		List<Player> out = testGame.getUsers().get(0).getRoster().getPlayersByPosition(PlayerPosition.DEFENCE).subList(0, 3);
+		List<MockPlayer> in = testGame.getTeams().get(0).getPlayersByPosition(PlayerPosition.DEFENCE).subList(0, 3);
+		List<MockPlayer> out = testGame.getUsers().get(0).getRoster().getPlayersByPosition(PlayerPosition.DEFENCE).subList(0, 3);
 		
 		user.makePurchase(in, out);
 		
-		for(Player p : in) {
+		for(MockPlayer p : in) {
 			// Check if the players we bought are in the roster
 			assertEquals(true, user.getRoster().contains(p));
 		}
-		for(Player p : out) {
+		for(MockPlayer p : out) {
 			// Check if the players we sold are not in the roster
 			assertEquals(false, user.getRoster().contains(p));
 		}

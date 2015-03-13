@@ -16,7 +16,7 @@ public class Roster {
 	public static PlayerPosition[] positions = new PlayerPosition[] {PlayerPosition.GOAL, PlayerPosition.DEFENCE, PlayerPosition.MIDFIELD, PlayerPosition.FORWARD};
 	
 	private String name;
-	private List<Player> players = new ArrayList<>();
+	private List<MockPlayer> players = new ArrayList<>();
 	
 	public Roster() {}
 	
@@ -32,23 +32,23 @@ public class Roster {
 		this.name = name;
 	}
 
-	public List<Player> getPlayers() {
+	public List<MockPlayer> getPlayers() {
 		return players;
 	}
 
-	public void setPlayers(List<Player> players) {
+	public void setPlayers(List<MockPlayer> players) {
 		this.players = players;
 	}
 
-	public void addPlayer(Player player) {
+	public void addPlayer(MockPlayer player) {
 		players.add(player);
 	}
 	
-	public void removePlayer(Player player) {
+	public void removePlayer(MockPlayer player) {
 		players.remove(player);
 	}
 	
-	public boolean contains(Player player) {
+	public boolean contains(MockPlayer player) {
 		return players.contains(player);
 	}
 	
@@ -73,15 +73,15 @@ public class Roster {
 	
 	public int getPositionCount(PlayerPosition position) {
 		int count = 0;
-		for(Player p : players) {
+		for(MockPlayer p : players) {
 			count += p.getPosition()==position ? 1 : 0;
 		}
 		return count;
 	}
 	
-	public List<Player> getPlayersByPosition(PlayerPosition pos) {
-		List<Player> playersByPos = new ArrayList<>();
-		for(Player p : players) {
+	public List<MockPlayer> getPlayersByPosition(PlayerPosition pos) {
+		List<MockPlayer> playersByPos = new ArrayList<>();
+		for(MockPlayer p : players) {
 			if(p.getPosition()==pos) {
 				playersByPos.add(p);
 			}

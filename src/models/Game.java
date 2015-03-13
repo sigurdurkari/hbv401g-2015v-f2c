@@ -9,7 +9,7 @@ public class Game {
 	private Integer userCount;
 	private List<User> users = new ArrayList<>();
 	
-	private List<Team> teams = new ArrayList<>();
+	private List<MockTeam> teams = new ArrayList<>();
 	private Schedule schedule;
 
 	private int activeRound = 0;
@@ -17,7 +17,7 @@ public class Game {
 	
 	public Game() {}
 	
-	public Game(List<User> users, List<Team> teams) {
+	public Game(List<User> users, List<MockTeam> teams) {
 		this.userCount = users.size();
 		this.users = users;
 		this.teams = teams;
@@ -41,11 +41,11 @@ public class Game {
 		this.users = users;
 	}
 
-	public List<Team> getTeams() {
+	public List<MockTeam> getTeams() {
 		return teams;
 	}
 
-	public void setTeams(List<Team> teams) {
+	public void setTeams(List<MockTeam> teams) {
 		this.teams = teams;
 	}
 

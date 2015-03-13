@@ -5,18 +5,18 @@ import java.util.ArrayList;
 
 public class Schedule {
 	
-	List<Team> teams = new ArrayList<>();
+	List<MockTeam> teams = new ArrayList<>();
 	List<ScheduledMatch> matches = new ArrayList<>();
 
 	public Schedule() {}
 	
-	public Schedule(List<Team> teams) {
+	public Schedule(List<MockTeam> teams) {
 		this.teams = teams;
 	}
 	
 	public void makeSchedule() {
 		matches = new ArrayList<>();
-		Team ghost = new Team("ghost");
+		MockTeam ghost = new MockTeam("ghost");
 		if(teams.size()%2==1) {
 			teams.add(ghost);
 		}
@@ -35,19 +35,19 @@ public class Schedule {
 		}
 	}
 
-	public List<Team> getTeams() {
+	public List<MockTeam> getTeams() {
 		return teams;
 	}
 
-	public void setTeams(List<Team> teams) {
+	public void setTeams(List<MockTeam> teams) {
 		this.teams = teams;
 	}
 	
-	public void addTeam(Team team) {
+	public void addTeam(MockTeam team) {
 		this.teams.add(team);
 	}
 	
-	public void removeTeam(Team team) {
+	public void removeTeam(MockTeam team) {
 		this.teams.remove(team);
 	}
 

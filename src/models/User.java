@@ -55,23 +55,23 @@ public class User {
 		setFinancialStatus(getFinancialStatus() + diff);
 	}
 	
-	public static int getPosCount(List<Player> players, PlayerPosition pos) {
+	public static int getPosCount(List<MockPlayer> players, PlayerPosition pos) {
 		int count = 0;
-		for(Player p : players) {
+		for(MockPlayer p : players) {
 			count += p.getPosition()==pos ? 1 : 0;
 		}
 		return count;
 	}
 	
-	public static int priceOfPlayers(List<Player> players) {
+	public static int priceOfPlayers(List<MockPlayer> players) {
 		int price = 0;
-		for(Player p : players) {
+		for(MockPlayer p : players) {
 			price += p.getPrice();
 		}
 		return price;
 	}
 	
-	public static boolean isBuyLegal(User user, List<Player> in, List<Player> out) {
+	public static boolean isBuyLegal(User user, List<MockPlayer> in, List<MockPlayer> out) {
 		Roster roster = user.getRoster();
 		
 		int keeperCount = roster.getPositionCount(PlayerPosition.GOAL) + getPosCount(in, PlayerPosition.GOAL) - getPosCount(out, PlayerPosition.GOAL);
@@ -100,11 +100,11 @@ public class User {
 		return true;
 	}
 	
-	public void makePurchase(List<Player> in, List<Player> out) {
-		for(Player p : out) {
+	public void makePurchase(List<MockPlayer> in, List<MockPlayer> out) {
+		for(MockPlayer p : out) {
 			roster.removePlayer(p);
 		}
-		for(Player p : in) {
+		for(MockPlayer p : in) {
 			roster.addPlayer(p);
 		}
 		updateFinancialStatus(priceOfPlayers(in)-priceOfPlayers(out));

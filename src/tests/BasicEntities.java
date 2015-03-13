@@ -6,73 +6,73 @@ import models.*;
 public class BasicEntities {
 	
 	public static Game generateGame() {
-		List<Team> teams = new ArrayList<>();
-		Team team1 = new Team("Liverpool");
+		List<MockTeam> teams = new ArrayList<>();
+		MockTeam team1 = new MockTeam("Liverpool");
 		for(int i=0; i<20; i++) {
-			team1.addPlayer(new Player("LiverpoolPlayer" + i, "Liverpool", Roster.positions[i%4], 100*(i%6 + 1)));
+			team1.addPlayer(new MockPlayer("LiverpoolPlayer" + i, "Liverpool", Roster.positions[i%4], 100*(i%6 + 1)));
 		}
-		team1.addPlayer(new Player("Andy Carroll", "Liverpool", PlayerPosition.FORWARD, 50000000));
+		team1.addPlayer(new MockPlayer("Andy Carroll", "Liverpool", PlayerPosition.FORWARD, 50000000));
 		teams.add(team1);
 		
-		Team team2 = new Team("Manchester United");
+		MockTeam team2 = new MockTeam("Manchester United");
 		for(int i=0; i<20; i++) {
-			team2.addPlayer(new Player("UnitedPlayer" + i, "Manchester United", Roster.positions[(i+1)%4], 100*(i%7 + 1)));
+			team2.addPlayer(new MockPlayer("UnitedPlayer" + i, "Manchester United", Roster.positions[(i+1)%4], 100*(i%7 + 1)));
 		}
 		teams.add(team2);
 		
-		Team team3 = new Team("Manchester Shitty");
+		MockTeam team3 = new MockTeam("Manchester Shitty");
 		for(int i=0; i<20; i++) {
-			team3.addPlayer(new Player("ShittyPlayer" + i, "Manchester Shitty", Roster.positions[(3*i+1)%4], 100*(i%3 + 3)));
+			team3.addPlayer(new MockPlayer("ShittyPlayer" + i, "Manchester Shitty", Roster.positions[(3*i+1)%4], 100*(i%3 + 3)));
 		}
 		teams.add(team3);
 		
-		Team team4 = new Team("Arsenal");
+		MockTeam team4 = new MockTeam("Arsenal");
 		for(int i=0; i<20; i++) {
-			team4.addPlayer(new Player("ArsenalPlayer" + i, "Arsenal", Roster.positions[(3*i+2)%4], 100*(i%5 + 3)));
+			team4.addPlayer(new MockPlayer("ArsenalPlayer" + i, "Arsenal", Roster.positions[(3*i+2)%4], 100*(i%5 + 3)));
 		}
 		teams.add(team4);
 		
-		Team team5 = new Team("Tottenham");
+		MockTeam team5 = new MockTeam("Tottenham");
 		for(int i=0; i<20; i++) {
-			team5.addPlayer(new Player("TottenhamPlayer" + i, "Tottenham", Roster.positions[(i+2)%4], 100*(i%3)));
+			team5.addPlayer(new MockPlayer("TottenhamPlayer" + i, "Tottenham", Roster.positions[(i+2)%4], 100*(i%3)));
 		}
 		teams.add(team5);
 		
-		Team team6 = new Team("Swansea");
+		MockTeam team6 = new MockTeam("Swansea");
 		for(int i=0; i<20; i++) {
-			team6.addPlayer(new Player("SwanseaPlayer" + i, "Swansea", Roster.positions[i%4], 100*(i%3 + 3)));
+			team6.addPlayer(new MockPlayer("SwanseaPlayer" + i, "Swansea", Roster.positions[i%4], 100*(i%3 + 3)));
 		}
 		teams.add(team6);
 		
-		Team team7 = new Team("Newcastle");
+		MockTeam team7 = new MockTeam("Newcastle");
 		for(int i=0; i<20; i++) {
-			team7.addPlayer(new Player("NewcastlePlayer" + i, "Newcastle", Roster.positions[(3*i+1)%4], 100*(i%5 + 2)));
+			team7.addPlayer(new MockPlayer("NewcastlePlayer" + i, "Newcastle", Roster.positions[(3*i+1)%4], 100*(i%5 + 2)));
 		}
 		teams.add(team7);
 		
-		Team team8 = new Team("Everton");
+		MockTeam team8 = new MockTeam("Everton");
 		for(int i=0; i<20; i++) {
-			team8.addPlayer(new Player("EvertonPlayer" + i, "Everton", Roster.positions[(i+1)%4], 100*(i%6 + 1)));
+			team8.addPlayer(new MockPlayer("EvertonPlayer" + i, "Everton", Roster.positions[(i+1)%4], 100*(i%6 + 1)));
 		}
 		teams.add(team8);
 		
-		Team team9 = new Team("Aston Villa");
+		MockTeam team9 = new MockTeam("Aston Villa");
 		for(int i=0; i<20; i++) {
-			team9.addPlayer(new Player("AstonPlayer" + i, "Aston Villa", Roster.positions[(2*i+1)%4], 100*(i%5 + 1)));
+			team9.addPlayer(new MockPlayer("AstonPlayer" + i, "Aston Villa", Roster.positions[(2*i+1)%4], 100*(i%5 + 1)));
 		}
 		teams.add(team9);
 		
-		Team team10 = new Team("Southhampton");
+		MockTeam team10 = new MockTeam("Southhampton");
 		for(int i=0; i<20; i++) {
-			team10.addPlayer(new Player("SouthhamptonPlayer" + i, "Southhampton", Roster.positions[i%4], 100*(i%3)));
+			team10.addPlayer(new MockPlayer("SouthhamptonPlayer" + i, "Southhampton", Roster.positions[i%4], 100*(i%3)));
 		}
 		teams.add(team10);
 		
-		List<Player> goalkeepers = new ArrayList<>();
-		List<Player> defenders = new ArrayList<>();
-		List<Player> midfielders = new ArrayList<>();
-		List<Player> forwards = new ArrayList<>();
-		for(Team team : teams) {
+		List<MockPlayer> goalkeepers = new ArrayList<>();
+		List<MockPlayer> defenders = new ArrayList<>();
+		List<MockPlayer> midfielders = new ArrayList<>();
+		List<MockPlayer> forwards = new ArrayList<>();
+		for(MockTeam team : teams) {
 			goalkeepers.addAll(team.getPlayersByPosition(PlayerPosition.GOAL));
 			defenders.addAll(team.getPlayersByPosition(PlayerPosition.DEFENCE));
 			midfielders.addAll(team.getPlayersByPosition(PlayerPosition.MIDFIELD));
@@ -82,7 +82,7 @@ public class BasicEntities {
 		List<User> users = new ArrayList<>();
 		User user1 = new User("Siggi", 0, Game.STARTING_CASH, new Roster("The Mighty Ducks"));
 		for(int i=0; i<14; i++) {
-			Player player = new Player();
+			MockPlayer player = new MockPlayer();
 			if(i<2) {
 				player = goalkeepers.get((3*i+7)%goalkeepers.size());
 			} else if(i<7) {
@@ -99,7 +99,7 @@ public class BasicEntities {
 		
 		User user2 = new User("Guðjón", 0, Game.STARTING_CASH, new Roster("Hver er Asswraith?"));
 		for(int i=0; i<14; i++) {
-			Player player = new Player();
+			MockPlayer player = new MockPlayer();
 			if(i<1) {
 				player = goalkeepers.get((4*i+5)%goalkeepers.size());
 			} else if(i<4) {
@@ -116,7 +116,7 @@ public class BasicEntities {
 		
 		User user3 = new User("Kristrún", 0, Game.STARTING_CASH, new Roster("Tímon"));
 		for(int i=0; i<14; i++) {
-			Player player = new Player();
+			MockPlayer player = new MockPlayer();
 			if(i<1) {
 				player = goalkeepers.get((3*i+7)%goalkeepers.size());
 			} else if(i<4) {
@@ -133,7 +133,7 @@ public class BasicEntities {
 		
 		User user4 = new User("Marelle", 0, Game.STARTING_CASH, new Roster("The Magnificent Players"));
 		for(int i=0; i<14; i++) {
-			Player player = new Player();
+			MockPlayer player = new MockPlayer();
 			if(i<2) {
 				player = goalkeepers.get((4*i+5)%goalkeepers.size());
 			} else if(i<7) {

@@ -2,30 +2,30 @@ package models;
 
 public class ScheduledMatch {
 	
-	public Team home, away;
+	public MockTeam home, away;
 	public Integer week;
 	
 	public ScheduledMatch() {}
 	
-	public ScheduledMatch(Team home, Team away, Integer week) {
+	public ScheduledMatch(MockTeam home, MockTeam away, Integer week) {
 		this.home = home;
 		this.away = away;
 		this.week = week;
 	}
 
-	public Team getHome() {
+	public MockTeam getHome() {
 		return home;
 	}
 
-	public void setHome(Team home) {
+	public void setHome(MockTeam home) {
 		this.home = home;
 	}
 
-	public Team getAway() {
+	public MockTeam getAway() {
 		return away;
 	}
 
-	public void setAway(Team away) {
+	public void setAway(MockTeam away) {
 		this.away = away;
 	}
 

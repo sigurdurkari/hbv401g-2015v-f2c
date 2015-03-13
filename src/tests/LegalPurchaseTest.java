@@ -20,11 +20,10 @@ public class LegalPurchaseTest {
 		testGame = null;
 	}
 
-	
-	 @Test
+	@Test
 	public void legalPurchaseTest() {
-		List<Player> in = new ArrayList<>();
-		List<Player> out = new ArrayList<>();
+		List<MockPlayer> in = new ArrayList<>();
+		List<MockPlayer> out = new ArrayList<>();
 		// No actual purchase
 		assertEquals(true, User.isBuyLegal(testGame.getUsers().get(0), in, out));
 		// Actual legal purchase

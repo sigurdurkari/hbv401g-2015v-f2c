@@ -1,6 +1,6 @@
 package models;
 
-public class Player {
+public class MockPlayer {
 	
 	private String name;
 	private String team;
@@ -8,9 +8,9 @@ public class Player {
 	private Integer price;
 	private Integer[] scores = new Integer[10];
 	
-	public Player() {}
+	public MockPlayer() {}
 	
-	public Player(String name, String team, PlayerPosition position, Integer price) {
+	public MockPlayer(String name, String team, PlayerPosition position, Integer price) {
 		this.name = name;
 		this.team = team;
 		this.position = position;

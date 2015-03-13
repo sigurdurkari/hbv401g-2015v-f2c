@@ -49,7 +49,7 @@ public class StartGameView extends JFrame {
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int userCount = 4;
-				List<Team> teams = new ArrayList<>();
+				List<MockTeam> teams = new ArrayList<>();
 				List<User> users = new ArrayList<>();
 				for(int i=0; i<userCount; i++) {
 					User u = new User("", new Integer(0), Game.STARTING_CASH, new Roster());
