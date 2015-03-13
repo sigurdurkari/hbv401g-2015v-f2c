@@ -1,6 +1,7 @@
 package tests;
 
 import org.junit.*;
+
 import static org.junit.Assert.*;
 
 import models.*;
@@ -27,7 +28,7 @@ public class BasicTest {
 		}
 	}
 	
-	@Test
+	/* @Test
 	public void legalPurchaseTest() {
 		List<Player> in = new ArrayList<>();
 		List<Player> out = new ArrayList<>();
@@ -55,8 +56,9 @@ public class BasicTest {
 		out = testGame.getUsers().get(0).getRoster().getPlayersByPosition(PlayerPosition.DEFENCE).subList(0, 3);
 		assertEquals(false, User.isBuyLegal(testGame.getUsers().get(0), in, out));
 	}
+	*/
 	
-	@Test
+	/* @Test
 	public void makePurchaseTest() {
 		User user = testGame.getUsers().get(0);
 		List<Player> in = testGame.getTeams().get(0).getPlayersByPosition(PlayerPosition.DEFENCE).subList(0, 3);
@@ -75,6 +77,7 @@ public class BasicTest {
 		// Check if the roster is legal
 		assertEquals(true, user.getRoster().isLegal());
 	}
+	*/
 
 	@Test
 	public void financialStatusTest() {
