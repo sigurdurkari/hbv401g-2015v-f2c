@@ -73,6 +73,14 @@ public class Game {
 		this.activeUser = activeUser;
 	}
 	
+	public void setSActiveUserName(String name) {
+		users.get(activeUser).setUserName(name);
+	}
+	
+	public void setRosterName(String name) {
+		users.get(activeUser).getRoster().setName(name);
+	}
+	
 	public void nextTurn() {
 		activeUser = (activeUser+1)%userCount;
 		activeRound = activeRound + (activeUser+1)/userCount;
