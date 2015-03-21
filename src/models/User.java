@@ -79,7 +79,7 @@ public class User {
 		int midCount = roster.getPositionCount(PlayerPosition.MIDFIELD) + getPosCount(in, PlayerPosition.MIDFIELD) - getPosCount(out, PlayerPosition.MIDFIELD);
 		int forwardCount = roster.getPositionCount(PlayerPosition.FORWARD) + getPosCount(in, PlayerPosition.FORWARD) - getPosCount(out, PlayerPosition.FORWARD);
 		
-		if(in.size()!=out.size() || in.size()>3 || out.size()>3) {
+		if(in.size()!=out.size() || in.size()>3 || out.size()>3 || in.isEmpty() || out.isEmpty()) {
 			return false;
 		}
 		if(keeperCount < Roster.MIN_GOAL || keeperCount > Roster.MAX_GOAL) {
