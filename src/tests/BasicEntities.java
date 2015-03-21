@@ -153,4 +153,69 @@ public class BasicEntities {
 		return testGame;
 	}
 
+	public static List<MockTeam> generateTeams() {
+		List<MockTeam> teams = new ArrayList<>();
+		MockTeam team1 = new MockTeam("Liverpool");
+		for(int i=0; i<20; i++) {
+			team1.addPlayer(new MockPlayer("LiverpoolPlayer" + i, "Liverpool", Roster.positions[i%4], 100*(i%6 + 1)));
+		}
+		team1.addPlayer(new MockPlayer("Andy Carroll", "Liverpool", PlayerPosition.FORWARD, 50000000));
+		teams.add(team1);
+		
+		MockTeam team2 = new MockTeam("Manchester United");
+		for(int i=0; i<20; i++) {
+			team2.addPlayer(new MockPlayer("UnitedPlayer" + i, "Manchester United", Roster.positions[(i+1)%4], 100*(i%7 + 1)));
+		}
+		teams.add(team2);
+		
+		MockTeam team3 = new MockTeam("Manchester Shitty");
+		for(int i=0; i<20; i++) {
+			team3.addPlayer(new MockPlayer("ShittyPlayer" + i, "Manchester Shitty", Roster.positions[(3*i+1)%4], 100*(i%3 + 3)));
+		}
+		teams.add(team3);
+		
+		MockTeam team4 = new MockTeam("Arsenal");
+		for(int i=0; i<20; i++) {
+			team4.addPlayer(new MockPlayer("ArsenalPlayer" + i, "Arsenal", Roster.positions[(3*i+2)%4], 100*(i%5 + 3)));
+		}
+		teams.add(team4);
+		
+		MockTeam team5 = new MockTeam("Tottenham");
+		for(int i=0; i<20; i++) {
+			team5.addPlayer(new MockPlayer("TottenhamPlayer" + i, "Tottenham", Roster.positions[(i+2)%4], 100*(i%3)));
+		}
+		teams.add(team5);
+		
+		MockTeam team6 = new MockTeam("Swansea");
+		for(int i=0; i<20; i++) {
+			team6.addPlayer(new MockPlayer("SwanseaPlayer" + i, "Swansea", Roster.positions[i%4], 100*(i%3 + 3)));
+		}
+		teams.add(team6);
+		
+		MockTeam team7 = new MockTeam("Newcastle");
+		for(int i=0; i<20; i++) {
+			team7.addPlayer(new MockPlayer("NewcastlePlayer" + i, "Newcastle", Roster.positions[(3*i+1)%4], 100*(i%5 + 2)));
+		}
+		teams.add(team7);
+		
+		MockTeam team8 = new MockTeam("Everton");
+		for(int i=0; i<20; i++) {
+			team8.addPlayer(new MockPlayer("EvertonPlayer" + i, "Everton", Roster.positions[(i+1)%4], 100*(i%6 + 1)));
+		}
+		teams.add(team8);
+		
+		MockTeam team9 = new MockTeam("Aston Villa");
+		for(int i=0; i<20; i++) {
+			team9.addPlayer(new MockPlayer("AstonPlayer" + i, "Aston Villa", Roster.positions[(2*i+1)%4], 100*(i%5 + 1)));
+		}
+		teams.add(team9);
+		
+		MockTeam team10 = new MockTeam("Southhampton");
+		for(int i=0; i<20; i++) {
+			team10.addPlayer(new MockPlayer("SouthhamptonPlayer" + i, "Southhampton", Roster.positions[i%4], 100*(i%3)));
+		}
+		teams.add(team10);
+		
+		return teams;
+	}
 }
