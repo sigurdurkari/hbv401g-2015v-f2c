@@ -1,7 +1,9 @@
 package views;
 
 import java.awt.*;
+
 import javax.swing.*;
+
 import models.*;
 
 
@@ -26,21 +28,29 @@ public class MakeRosterPanel extends JPanel {
 		nameBox.add(rstrName);
 		
 		Box rosterBox = Box.createHorizontalBox();
-		rosterBox.setBounds(50,225,500,500);
+		rosterBox.setBounds(50,100,500,500);
 		add(rosterBox);
 		
-		//testdót
-		MockTeam team1 = new MockTeam("Liverpool");
+		//test stuff
+		MockPlayer[] playerArray= new MockPlayer[20];
 		for(int i=0; i<20; i++) {
-			team1.addPlayer(new MockPlayer("LiverpoolPlayer" + i, "Liverpool", Roster.positions[i%4], 100*(i%6 + 1)));
+			playerArray[i]=new MockPlayer("LiverpoolPlayer" + i, "Liverpool", Roster.positions[i%4], 100*(i%6 + 1));
 		}
-		team1.addPlayer(new MockPlayer("Andy Carroll", "Liverpool", PlayerPosition.FORWARD, 50000000));
+		MockTeam team2 = new MockTeam("Manchester United");
+		for(int i=0; i<20; i++) {
+			team2.addPlayer(new MockPlayer("UnitedPlayer" + i, "Manchester United", Roster.positions[(i+1)%4], 100*(i%7 + 1)));
+		}
 		
+		//MockPlayer[] plrs = team2.getPlayers().toArray(); 
+
+		JList<MockPlayer> roster = new JList<MockPlayer>(playerArray);
+		JList<MockPlayer> players = new JList<MockPlayer>(playerArray);
 		
+		players.setCellRenderer(new MyCellRenderer());
+		roster.setCellRenderer(new MyCellRenderer());
 		
-		
-		JList roster = new JList();
-		JList players = new JList();
+		rosterBox.add(roster);
+		rosterBox.add(players);
 		
 		
 		
@@ -50,7 +60,9 @@ public class MakeRosterPanel extends JPanel {
 		JLabel left, right;
 	
 		MyCellRenderer() {
-			setLayout(new GridLayout(1, 2));
+			GridLayout layout = new GridLayout(1, 2);
+			layout.setHgap(10);
+			setLayout(layout);
 			left = new JLabel();
 			right = new JLabel();
 			left.setOpaque(true);
@@ -60,10 +72,11 @@ public class MakeRosterPanel extends JPanel {
 		}
 		
 		public Component getListCellRendererComponent(JList list,Object value,int index,boolean isSelected,boolean cellHasFocus){ 
-			String leftData = (Player)value.getName();
-			String rightData = ((Player)value).getPrice();
+			String leftData = ((MockPlayer)value).getName();
+			String rightData = ((MockPlayer)value).getPrice().toString();
 			left.setText(leftData);
 			right.setText(rightData);
+			right.setHorizontalTextPosition(JLabel.RIGHT);
 			if(isSelected){
 				left.setBackground(list.getSelectionBackground());
 				left.setForeground(list.getSelectionForeground());
@@ -84,6 +97,9 @@ public class MakeRosterPanel extends JPanel {
 	
 	public static void main(String[] args){
 		JFrame frame = new JFrame();
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
+		frame.setSize(800,800);
 		JPanel panel = new MakeRosterPanel();
 		frame.add(panel);
 		frame.setVisible(true);
