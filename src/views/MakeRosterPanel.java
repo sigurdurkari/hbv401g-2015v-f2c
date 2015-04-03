@@ -1,6 +1,10 @@
 package views;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -11,14 +15,14 @@ public class MakeRosterPanel extends JPanel {
 	
 	private String user;
 	private String rosterName;
-	private Roster finalRoster;
+	private List<MockPlayer> playersList = new ArrayList<>();
+	private List<MockPlayer> finalRoster = new ArrayList<>();
 	
-	/**
-	 * Create the panel.
-	 */
+
 	public MakeRosterPanel() {
 		setLayout(null);
-		JButton nextButton = new JButton("next user");
+		JButton selectBtn = new JButton("Select player");
+		JButton deselectBtn = new JButton("Deselect player");
 		JTextField userName = new JTextField("nafn notanda");
 		JTextField rstrName = new JTextField("nafn liðs");
 		Box nameBox = Box.createVerticalBox();
@@ -28,38 +32,86 @@ public class MakeRosterPanel extends JPanel {
 		nameBox.add(rstrName);
 		
 		Box rosterBox = Box.createHorizontalBox();
-		rosterBox.setBounds(50,100,500,500);
+		rosterBox.setBounds(50,150,500,700);
 		add(rosterBox);
 		
+		
+		Box rosterBoxL = Box.createVerticalBox();
+		Box rosterBoxR = Box.createVerticalBox();
+		
+		
+		rosterBox.add(rosterBoxL);
+		rosterBox.add(rosterBoxR);
+
+
+		
+		
 		//test stuff
-		MockPlayer[] playerArray= new MockPlayer[20];
+		List<MockTeam> teams = new ArrayList<>();
+		MockTeam team1 = new MockTeam("Liverpool");
 		for(int i=0; i<20; i++) {
-			playerArray[i]=new MockPlayer("LiverpoolPlayer" + i, "Liverpool", Roster.positions[i%4], 100*(i%6 + 1));
+			team1.addPlayer(new MockPlayer("LiverpoolPlayer" + i, "Liverpool", Roster.positions[i%4], 100*(i%6 + 1)));
 		}
 		MockTeam team2 = new MockTeam("Manchester United");
 		for(int i=0; i<20; i++) {
 			team2.addPlayer(new MockPlayer("UnitedPlayer" + i, "Manchester United", Roster.positions[(i+1)%4], 100*(i%7 + 1)));
 		}
 		
-		//MockPlayer[] plrs = team2.getPlayers().toArray(); 
+		
+		
+		playersList = team1.getPlayers();
+		
+		JList<MockPlayer> roster = new JList<MockPlayer>();
+		JList<MockPlayer> players = new JList<MockPlayer>(playersList.toArray(new MockPlayer[playersList.size()]));
+		
+		JScrollPane rosterScroll = new JScrollPane();
+		rosterScroll.setBounds(50,150,500,350);
+		JScrollPane playersScroll = new JScrollPane();
+		
+		rosterScroll.getViewport().add(roster);
+		playersScroll.getViewport().add(players);
+		playersScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-		JList<MockPlayer> roster = new JList<MockPlayer>(playerArray);
-		JList<MockPlayer> players = new JList<MockPlayer>(playerArray);
 		
-		players.setCellRenderer(new MyCellRenderer());
-		roster.setCellRenderer(new MyCellRenderer());
+		players.setCellRenderer(new PlayerCellRender());
+		players.setVisibleRowCount(15);
+		roster.setCellRenderer(new PlayerCellRender());
+		roster.setVisibleRowCount(15);
 		
-		rosterBox.add(roster);
-		rosterBox.add(players);
+		players.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		roster.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		
+
+		rosterBoxL.add(rosterScroll);
+		rosterBoxL.add(deselectBtn);
+		deselectBtn.setAlignmentX(CENTER_ALIGNMENT);
+		rosterBoxR.add(playersScroll);
+		rosterBoxR.add(selectBtn);
+		selectBtn.setAlignmentX(CENTER_ALIGNMENT);
 		
 		
+
 		
 	}
 	
-	public static class MyCellRenderer extends JPanel implements ListCellRenderer{
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static class PlayerCellRender extends JPanel implements ListCellRenderer{
 		JLabel left, right;
 	
-		MyCellRenderer() {
+		PlayerCellRender() {
 			GridLayout layout = new GridLayout(1, 2);
 			layout.setHgap(10);
 			setLayout(layout);
