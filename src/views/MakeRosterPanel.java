@@ -11,13 +11,14 @@ import javax.swing.*;
 import models.*;
 
 
-public class MakeRosterPanel extends JPanel {
+public class MakeRosterPanel extends JPanel implements ActionListener {
 	
 	private String user;
 	private String rosterName;
 	private List<MockPlayer> playersList = new ArrayList<>();
 	private List<MockPlayer> finalRoster = new ArrayList<>();
-	private JList<MockPlayer> roster = new JList<MockPlayer>();
+	private DefaultListModel<MockPlayer> rosterModel = new DefaultListModel<>();
+	private JList<MockPlayer> roster = new JList<MockPlayer>(rosterModel);
 	private JList<MockPlayer> players = new JList<MockPlayer>();
 	
 	
@@ -25,7 +26,9 @@ public class MakeRosterPanel extends JPanel {
 	public MakeRosterPanel() {
 		setLayout(null);
 		JButton selectBtn = new JButton("Select player");
+		selectBtn.addActionListener(this);
 		JButton deselectBtn = new JButton("Deselect player");
+		deselectBtn.addActionListener(this);
 		JTextField userName = new JTextField("nafn notanda");
 		JTextField rstrName = new JTextField("nafn liðs");
 		Box nameBox = Box.createVerticalBox();
@@ -46,9 +49,6 @@ public class MakeRosterPanel extends JPanel {
 		rosterBox.add(rosterBoxL);
 		rosterBox.add(rosterBoxR);
 
-
-		
-		
 		//test stuff
 		MockTeam team1 = new MockTeam("Liverpool");
 		for(int i=0; i<20; i++) {
@@ -58,11 +58,8 @@ public class MakeRosterPanel extends JPanel {
 		for(int i=0; i<20; i++) {
 			team2.addPlayer(new MockPlayer("UnitedPlayer" + i, "Manchester United", Roster.positions[(i+1)%4], 100*(i%7 + 1)));
 		}
-		
-		
-		
+
 		playersList = team1.getPlayers();
-		
 		
 		players = new JList<MockPlayer>(playersList.toArray(new MockPlayer[playersList.size()]));
 		
@@ -138,6 +135,17 @@ public class MakeRosterPanel extends JPanel {
 		}
 	}
 	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() instanceof JButton) {
+			JButton btn = (JButton)e.getSource();
+			if(btn.getText().equals("Select player")) {
+				rosterModel.addElement(players.getSelectedValue());
+			} else {
+				rosterModel.removeElement(roster.getSelectedValue());
+			}
+		}
+	}
 	
 	public static void main(String[] args){
 		JFrame frame = new JFrame();
