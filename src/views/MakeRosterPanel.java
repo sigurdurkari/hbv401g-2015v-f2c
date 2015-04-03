@@ -17,6 +17,9 @@ public class MakeRosterPanel extends JPanel {
 	private String rosterName;
 	private List<MockPlayer> playersList = new ArrayList<>();
 	private List<MockPlayer> finalRoster = new ArrayList<>();
+	private JList<MockPlayer> roster = new JList<MockPlayer>();
+	private JList<MockPlayer> players = new JList<MockPlayer>();
+	
 	
 
 	public MakeRosterPanel() {
@@ -32,7 +35,7 @@ public class MakeRosterPanel extends JPanel {
 		nameBox.add(rstrName);
 		
 		Box rosterBox = Box.createHorizontalBox();
-		rosterBox.setBounds(50,150,500,700);
+		rosterBox.setBounds(50,150,550,300);
 		add(rosterBox);
 		
 		
@@ -47,7 +50,6 @@ public class MakeRosterPanel extends JPanel {
 		
 		
 		//test stuff
-		List<MockTeam> teams = new ArrayList<>();
 		MockTeam team1 = new MockTeam("Liverpool");
 		for(int i=0; i<20; i++) {
 			team1.addPlayer(new MockPlayer("LiverpoolPlayer" + i, "Liverpool", Roster.positions[i%4], 100*(i%6 + 1)));
@@ -61,11 +63,10 @@ public class MakeRosterPanel extends JPanel {
 		
 		playersList = team1.getPlayers();
 		
-		JList<MockPlayer> roster = new JList<MockPlayer>();
-		JList<MockPlayer> players = new JList<MockPlayer>(playersList.toArray(new MockPlayer[playersList.size()]));
+		
+		players = new JList<MockPlayer>(playersList.toArray(new MockPlayer[playersList.size()]));
 		
 		JScrollPane rosterScroll = new JScrollPane();
-		rosterScroll.setBounds(50,150,500,350);
 		JScrollPane playersScroll = new JScrollPane();
 		
 		rosterScroll.getViewport().add(roster);
@@ -92,23 +93,14 @@ public class MakeRosterPanel extends JPanel {
 		
 
 		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	} 
 	
 	
 	public static class PlayerCellRender extends JPanel implements ListCellRenderer{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		JLabel left, right;
 	
 		PlayerCellRender() {
