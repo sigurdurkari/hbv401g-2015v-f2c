@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.*;
@@ -16,11 +17,9 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 	private String user;
 	private String rosterName;
 	private List<MockPlayer> playersList = new ArrayList<>();
-	private List<MockPlayer> finalRoster = new ArrayList<>();
 	private DefaultListModel<MockPlayer> rosterModel = new DefaultListModel<>();
 	private JList<MockPlayer> roster = new JList<MockPlayer>(rosterModel);
 	private JList<MockPlayer> players = new JList<MockPlayer>();
-	
 	
 
 	public MakeRosterPanel() {
@@ -88,9 +87,31 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		selectBtn.setAlignmentX(CENTER_ALIGNMENT);
 		
 		
-
-		
-	} 
+	}
+	
+	public String getUserName(){
+		return user;
+	}
+	
+	public String getRosterName(){
+		return rosterName;
+	}
+	
+	public List<MockPlayer> getRoster(){
+		List<MockPlayer> list = new ArrayList<>();
+		for(int i=0;i<rosterModel.getSize();i++ ){
+			list.add(rosterModel.getElementAt(i));
+		}
+		return list;
+	}
+	
+	public void setUserName(String name){
+		user=name;
+	}
+	
+	public void setRosterName(String name){
+		rosterName=name;
+	}
 	
 	
 	public static class PlayerCellRender extends JPanel implements ListCellRenderer{
@@ -100,7 +121,7 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		JLabel left, right;
 	
-		PlayerCellRender() {
+		public PlayerCellRender() {
 			GridLayout layout = new GridLayout(1, 2);
 			layout.setHgap(10);
 			setLayout(layout);
