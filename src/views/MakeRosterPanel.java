@@ -37,7 +37,7 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		nameBox.add(rstrName);
 		
 		Box rosterBox = Box.createHorizontalBox();
-		rosterBox.setBounds(50,150,550,300);
+		rosterBox.setBounds(50,150,700,300);
 		add(rosterBox);
 		
 		
@@ -119,34 +119,47 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		JLabel left, right;
+		JLabel left, middle, right;
 	
 		public PlayerCellRender() {
-			GridLayout layout = new GridLayout(1, 2);
+			GridLayout layout = new GridLayout(1, 3);
 			layout.setHgap(10);
 			setLayout(layout);
 			left = new JLabel();
+			Dimension d = left.getPreferredSize();
+			middle = new JLabel();
+			middle.setMaximumSize(new Dimension(10,d.height));
 			right = new JLabel();
+			right.setPreferredSize(new Dimension(10,d.height));
 			left.setOpaque(true);
+			middle.setOpaque(true);
 			right.setOpaque(true);
 			add(left);
+			add(middle);
 			add(right);
 		}
 		
 		public Component getListCellRendererComponent(JList list,Object value,int index,boolean isSelected,boolean cellHasFocus){ 
 			String leftData = ((MockPlayer)value).getName();
+			String middleData = "GK";
 			String rightData = ((MockPlayer)value).getPrice().toString();
 			left.setText(leftData);
+			middle.setText(middleData);
+			middle.setHorizontalTextPosition(JLabel.CENTER);
 			right.setText(rightData);
 			right.setHorizontalTextPosition(JLabel.RIGHT);
 			if(isSelected){
 				left.setBackground(list.getSelectionBackground());
 				left.setForeground(list.getSelectionForeground());
+				middle.setBackground(list.getSelectionBackground());
+				middle.setForeground(list.getSelectionForeground());
 				right.setBackground(list.getSelectionBackground());
 				right.setForeground(list.getSelectionForeground());
 			} else {
 				left.setBackground(list.getBackground());
 				left.setForeground(list.getForeground());
+				middle.setBackground(list.getBackground());
+				middle.setForeground(list.getForeground());
 				right.setBackground(list.getBackground());
 				right.setForeground(list.getForeground());
 			}
