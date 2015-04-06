@@ -88,5 +88,17 @@ public class Roster {
 		}
 		return playersByPos;
 	}
+	
+	public static boolean isPartlyLegal(List<MockPlayer> roster, MockPlayer player, Integer financialStatus) {
+		if(player.getPrice() > financialStatus) return false;
+		List<MockPlayer> newRoster = new ArrayList<>();
+		newRoster.addAll(roster);
+		newRoster.add(player);
+		if(User.getPosCount(newRoster, PlayerPosition.GOAL) > MAX_GOAL) return false;
+		if(User.getPosCount(newRoster, PlayerPosition.DEFENCE) > MAX_DEFENCE) return false;
+		if(User.getPosCount(newRoster, PlayerPosition.MIDFIELD) > MAX_MIDFIELD) return false;
+		if(User.getPosCount(newRoster, PlayerPosition.FORWARD) > MAX_FORWARD) return false;
+		return true;
+	}
 
 }
