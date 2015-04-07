@@ -3,9 +3,9 @@ package views;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import javax.swing.*;
 
@@ -17,12 +17,10 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 	private String user;
 	private String rosterName;
 	private List<MockPlayer> playersList = new ArrayList<>();
-	private List<MockPlayer> finalRoster = new ArrayList<>();
 	private DefaultListModel<MockPlayer> rosterModel = new DefaultListModel<>();
 	private JList<MockPlayer> roster = new JList<MockPlayer>(rosterModel);
 	private JList<MockPlayer> players = new JList<MockPlayer>();
 	private int financialStatus;
-	
 	
 
 	public MakeRosterPanel() {
@@ -43,7 +41,7 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		nameBox.add(rstrName);
 		
 		Box rosterBox = Box.createHorizontalBox();
-		rosterBox.setBounds(50,150,550,300);
+		rosterBox.setBounds(50,150,700,300);
 		add(rosterBox);
 		
 		
@@ -93,9 +91,31 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		selectBtn.setAlignmentX(CENTER_ALIGNMENT);
 		
 		
-
-		
-	} 
+	}
+	
+	public String getUserName(){
+		return user;
+	}
+	
+	public String getRosterName(){
+		return rosterName;
+	}
+	
+	public List<MockPlayer> getRoster(){
+		List<MockPlayer> list = new ArrayList<>();
+		for(int i=0;i<rosterModel.getSize();i++ ){
+			list.add(rosterModel.getElementAt(i));
+		}
+		return list;
+	}
+	
+	public void setUserName(String name){
+		user=name;
+	}
+	
+	public void setRosterName(String name){
+		rosterName=name;
+	}
 	
 	
 	public static class PlayerCellRender extends JPanel implements ListCellRenderer{
@@ -103,34 +123,47 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		JLabel left, right;
+		JLabel left, middle, right;
 	
-		PlayerCellRender() {
-			GridLayout layout = new GridLayout(1, 2);
+		public PlayerCellRender() {
+			GridLayout layout = new GridLayout(1, 3);
 			layout.setHgap(10);
 			setLayout(layout);
 			left = new JLabel();
+			Dimension d = left.getPreferredSize();
+			middle = new JLabel();
+			middle.setMaximumSize(new Dimension(10,d.height));
 			right = new JLabel();
+			right.setPreferredSize(new Dimension(10,d.height));
 			left.setOpaque(true);
+			middle.setOpaque(true);
 			right.setOpaque(true);
 			add(left);
+			add(middle);
 			add(right);
 		}
 		
 		public Component getListCellRendererComponent(JList list,Object value,int index,boolean isSelected,boolean cellHasFocus){ 
 			String leftData = ((MockPlayer)value).getName();
+			String middleData = "GK";
 			String rightData = ((MockPlayer)value).getPrice().toString();
 			left.setText(leftData);
+			middle.setText(middleData);
+			middle.setHorizontalTextPosition(JLabel.CENTER);
 			right.setText(rightData);
 			right.setHorizontalTextPosition(JLabel.RIGHT);
 			if(isSelected){
 				left.setBackground(list.getSelectionBackground());
 				left.setForeground(list.getSelectionForeground());
+				middle.setBackground(list.getSelectionBackground());
+				middle.setForeground(list.getSelectionForeground());
 				right.setBackground(list.getSelectionBackground());
 				right.setForeground(list.getSelectionForeground());
 			} else {
 				left.setBackground(list.getBackground());
 				left.setForeground(list.getForeground());
+				middle.setBackground(list.getBackground());
+				middle.setForeground(list.getForeground());
 				right.setBackground(list.getBackground());
 				right.setForeground(list.getForeground());
 			}
