@@ -1,9 +1,11 @@
 package models;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
+import java.awt.*;
 
-public class User {
+public class User implements Comparable<User>{
 	
 	private String userName;
 	private Integer userScore;
@@ -109,5 +111,26 @@ public class User {
 		}
 		updateFinancialStatus(priceOfPlayers(in)-priceOfPlayers(out));
 	}
+	
+	public int compareTo(User u){
+		return (u.getUserScore()).compareTo(userScore);
+	}
+	
+	public static void main(String[] args){
+		List<User> users = new ArrayList<>();
+		
+		users.add(new User("Siggi", 0, Game.STARTING_CASH, new Roster("The Mighty Ducks")));
+		users.add(new User("Guðjón", 23, Game.STARTING_CASH, new Roster("Hver er Asswraith?")));
+		users.add(new User("Marelle", 12, Game.STARTING_CASH, new Roster("The Magnificent Players")));
+		
+		Collections.sort(users);
+		
+		System.out.println(users.get(0).getUserName());
+		
+		
+		
+	}
+
+
 	
 }
