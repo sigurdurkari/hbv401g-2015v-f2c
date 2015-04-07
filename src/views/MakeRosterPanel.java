@@ -145,7 +145,7 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		
 		public Component getListCellRendererComponent(JList list,Object value,int index,boolean isSelected,boolean cellHasFocus){ 
 			String leftData = ((MockPlayer)value).getName();
-			String middleData = "GK";
+			String middleData = ((MockPlayer)value).getPosition().name().substring(0,1);
 			String rightData = ((MockPlayer)value).getPrice().toString();
 			left.setText(leftData);
 			middle.setText(middleData);
