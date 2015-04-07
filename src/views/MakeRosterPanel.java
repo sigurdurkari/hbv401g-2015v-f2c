@@ -3,9 +3,9 @@ package views;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.*;
 
@@ -20,16 +20,20 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 	private DefaultListModel<MockPlayer> rosterModel = new DefaultListModel<>();
 	private JList<MockPlayer> roster = new JList<MockPlayer>(rosterModel);
 	private JList<MockPlayer> players = new JList<MockPlayer>();
+	private int financialStatus;
 	
 
 	public MakeRosterPanel() {
+		financialStatus = Game.STARTING_CASH;
 		setLayout(null);
 		JButton selectBtn = new JButton("Select player");
 		selectBtn.addActionListener(this);
 		JButton deselectBtn = new JButton("Deselect player");
 		deselectBtn.addActionListener(this);
 		JTextField userName = new JTextField("nafn notanda");
+		userName.addActionListener(new TextFieldListener(user));
 		JTextField rstrName = new JTextField("nafn liðs");
+		rstrName.addActionListener(new TextFieldListener(rosterName));
 		Box nameBox = Box.createVerticalBox();
 		nameBox.setBounds(50, 50, 150, 60);
 		add(nameBox);
@@ -141,7 +145,7 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		
 		public Component getListCellRendererComponent(JList list,Object value,int index,boolean isSelected,boolean cellHasFocus){ 
 			String leftData = ((MockPlayer)value).getName();
-			String middleData = "GK";
+			String middleData = ((MockPlayer)value).getPosition().name().substring(0,1);
 			String rightData = ((MockPlayer)value).getPrice().toString();
 			left.setText(leftData);
 			middle.setText(middleData);
@@ -174,11 +178,48 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		if(e.getSource() instanceof JButton) {
 			JButton btn = (JButton)e.getSource();
 			if(btn.getText().equals("Select player")) {
-				rosterModel.addElement(players.getSelectedValue());
+				ArrayList<MockPlayer> rosterList = Collections.list(rosterModel.elements());
+				if(Roster.isPartlyLegal(rosterList, players.getSelectedValue(), financialStatus) && !rosterList.contains(players.getSelectedValue())) {
+					rosterModel.addElement(players.getSelectedValue());
+					financialStatus -= players.getSelectedValue().getPrice();
+					sortRoster();
+				}
 			} else {
+				financialStatus += roster.getSelectedValue().getPrice();
 				rosterModel.removeElement(roster.getSelectedValue());
 			}
 		}
+	}
+	
+	public static class TextFieldListener implements ActionListener {
+		private String text;
+		
+		public TextFieldListener(String text) {
+			this.text = text;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(e.getSource() instanceof JTextField) {
+				JTextField field = (JTextField)e.getSource();
+				text = field.getText();
+			}
+		}
+	}
+	
+	public void sortRoster() {
+		List<MockPlayer> rosterList = new ArrayList<MockPlayer>(Collections.list(rosterModel.elements()));
+		rosterModel.removeAllElements();
+		for(PlayerPosition pos : Roster.positions) {
+			for(MockPlayer player : rosterList) {
+				if(player.getPosition() == pos)
+					rosterModel.addElement(player);
+			}
+		}
+	}
+	
+	public int getFinancialStatus() {
+		return financialStatus;
 	}
 	
 	public static void main(String[] args){

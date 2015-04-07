@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Roster {
 	
 	public static int MIN_GOAL = 1;
-	public static int MAX_GOAL = 4;
+	public static int MAX_GOAL = 2;
 	public static int MIN_DEFENCE = 3;
 	public static int MAX_DEFENCE = 8;
 	public static int MIN_MIDFIELD = 3;
@@ -94,6 +94,7 @@ public class Roster {
 		List<MockPlayer> newRoster = new ArrayList<>();
 		newRoster.addAll(roster);
 		newRoster.add(player);
+		if(newRoster.size() > 14) return false;
 		if(User.getPosCount(newRoster, PlayerPosition.GOAL) > MAX_GOAL) return false;
 		if(User.getPosCount(newRoster, PlayerPosition.DEFENCE) > MAX_DEFENCE) return false;
 		if(User.getPosCount(newRoster, PlayerPosition.MIDFIELD) > MAX_MIDFIELD) return false;
