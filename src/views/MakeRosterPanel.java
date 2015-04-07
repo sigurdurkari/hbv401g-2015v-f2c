@@ -1,8 +1,8 @@
 package views;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import javax.swing.event.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,9 +31,9 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		JButton deselectBtn = new JButton("Deselect player");
 		deselectBtn.addActionListener(this);
 		JTextField userName = new JTextField("nafn notanda");
-		userName.addActionListener(new TextFieldListener(user));
+		userName.getDocument().addDocumentListener(new TextFieldListener(user, userName));
 		JTextField rstrName = new JTextField("nafn liðs");
-		rstrName.addActionListener(new TextFieldListener(rosterName));
+		rstrName.getDocument().addDocumentListener(new TextFieldListener(rosterName, rstrName));
 		Box nameBox = Box.createVerticalBox();
 		nameBox.setBounds(50, 50, 150, 60);
 		add(nameBox);
@@ -191,20 +191,28 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		}
 	}
 	
-	public static class TextFieldListener implements ActionListener {
+	public static class TextFieldListener implements DocumentListener {
 		private String text;
+		private JTextField textField;
 		
-		public TextFieldListener(String text) {
+		public TextFieldListener(String text, JTextField textField) {
 			this.text = text;
+			this.textField = textField;
 		}
+		
 		
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(e.getSource() instanceof JTextField) {
-				JTextField field = (JTextField)e.getSource();
-				text = field.getText();
-			}
-		}
+	    public void insertUpdate(DocumentEvent e) {
+			text = textField.getText();
+	    }
+	    @Override
+	    public void removeUpdate(DocumentEvent e) {
+	    	text = textField.getText();
+	    }
+	    @Override
+	    public void changedUpdate(DocumentEvent e) {
+	    	text = textField.getText();
+	    }
 	}
 	
 	public void sortRoster() {
