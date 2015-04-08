@@ -21,6 +21,7 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 	private JList<MockPlayer> roster = new JList<MockPlayer>(rosterModel);
 	private JList<MockPlayer> players = new JList<MockPlayer>();
 	private int financialStatus;
+	private JLabel currentFinancialStatus = new JLabel();
 	
 
 	public MakeRosterPanel() {
@@ -39,6 +40,15 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		add(nameBox);
 		nameBox.add(userName);
 		nameBox.add(rstrName);
+		
+		Box financeStatusBox = Box.createHorizontalBox();
+		financeStatusBox.setBounds(350, 50, 250, 60);
+		add(financeStatusBox);
+		
+		JLabel financeLbl = new JLabel("Financial Status: ");
+		currentFinancialStatus.setText(""+financialStatus);
+		financeStatusBox.add(financeLbl);
+		financeStatusBox.add(currentFinancialStatus);
 		
 		Box rosterBox = Box.createHorizontalBox();
 		rosterBox.setBounds(50,150,700,300);
@@ -126,44 +136,44 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		JLabel left, middle, right;
 	
 		public PlayerCellRender() {
-			GridLayout layout = new GridLayout(1, 3);
+			GridLayout layout = new GridLayout(1, 2);
 			layout.setHgap(10);
 			setLayout(layout);
 			left = new JLabel();
 			Dimension d = left.getPreferredSize();
-			middle = new JLabel();
-			middle.setMaximumSize(new Dimension(10,d.height));
+			//middle = new JLabel();
+			//middle.setMaximumSize(new Dimension(10, d.height));
 			right = new JLabel();
-			right.setPreferredSize(new Dimension(10,d.height));
+			right.setPreferredSize(new Dimension(10, d.height));
 			left.setOpaque(true);
-			middle.setOpaque(true);
+			//middle.setOpaque(true);
 			right.setOpaque(true);
 			add(left);
-			add(middle);
+			//add(middle);
 			add(right);
 		}
 		
 		public Component getListCellRendererComponent(JList list,Object value,int index,boolean isSelected,boolean cellHasFocus){ 
 			String leftData = ((MockPlayer)value).getName();
-			String middleData = ((MockPlayer)value).getPosition().name().substring(0,1);
-			String rightData = ((MockPlayer)value).getPrice().toString();
+			//String middleData = ((MockPlayer)value).getPosition().name().substring(0,1);
+			String rightData = ((MockPlayer)value).getPosition().name().substring(0,1)+"   "+((MockPlayer)value).getPrice().toString();
 			left.setText(leftData);
-			middle.setText(middleData);
-			middle.setHorizontalTextPosition(JLabel.CENTER);
+			//middle.setText(middleData);
+			//middle.setHorizontalTextPosition(JLabel.CENTER);
 			right.setText(rightData);
 			right.setHorizontalTextPosition(JLabel.RIGHT);
 			if(isSelected){
 				left.setBackground(list.getSelectionBackground());
 				left.setForeground(list.getSelectionForeground());
-				middle.setBackground(list.getSelectionBackground());
-				middle.setForeground(list.getSelectionForeground());
+				//middle.setBackground(list.getSelectionBackground());
+				//middle.setForeground(list.getSelectionForeground());
 				right.setBackground(list.getSelectionBackground());
 				right.setForeground(list.getSelectionForeground());
 			} else {
 				left.setBackground(list.getBackground());
 				left.setForeground(list.getForeground());
-				middle.setBackground(list.getBackground());
-				middle.setForeground(list.getForeground());
+				//middle.setBackground(list.getBackground());
+				//middle.setForeground(list.getForeground());
 				right.setBackground(list.getBackground());
 				right.setForeground(list.getForeground());
 			}
@@ -183,10 +193,12 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 					rosterModel.addElement(players.getSelectedValue());
 					financialStatus -= players.getSelectedValue().getPrice();
 					sortRoster();
+					currentFinancialStatus.setText(""+financialStatus);
 				}
 			} else {
 				financialStatus += roster.getSelectedValue().getPrice();
 				rosterModel.removeElement(roster.getSelectedValue());
+				currentFinancialStatus.setText(""+financialStatus);
 			}
 		}
 	}
@@ -230,12 +242,13 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		return financialStatus;
 	}
 	
+	
 	public static void main(String[] args){
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
-		frame.setSize(800,800);
+		frame.setSize(900,700);
 		JPanel panel = new MakeRosterPanel();
 		frame.add(panel);
 		frame.setVisible(true);
