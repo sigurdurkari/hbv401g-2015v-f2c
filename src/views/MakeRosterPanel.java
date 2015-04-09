@@ -189,16 +189,18 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 			JButton btn = (JButton)e.getSource();
 			if(btn.getText().equals("Select player")) {
 				ArrayList<MockPlayer> rosterList = Collections.list(rosterModel.elements());
-				if(Roster.isPartlyLegal(rosterList, players.getSelectedValue(), financialStatus) && !rosterList.contains(players.getSelectedValue())) {
+				if(players.getSelectedValue() instanceof MockPlayer && Roster.isPartlyLegal(rosterList, players.getSelectedValue(), financialStatus) && !rosterList.contains(players.getSelectedValue())) {
 					rosterModel.addElement(players.getSelectedValue());
 					financialStatus -= players.getSelectedValue().getPrice();
 					sortRoster();
 					currentFinancialStatus.setText(""+financialStatus);
 				}
 			} else {
-				financialStatus += roster.getSelectedValue().getPrice();
-				rosterModel.removeElement(roster.getSelectedValue());
-				currentFinancialStatus.setText(""+financialStatus);
+				if(roster.getSelectedValue() instanceof MockPlayer){
+					financialStatus += roster.getSelectedValue().getPrice();
+					rosterModel.removeElement(roster.getSelectedValue());
+					currentFinancialStatus.setText(""+financialStatus);
+				}
 			}
 		}
 	}

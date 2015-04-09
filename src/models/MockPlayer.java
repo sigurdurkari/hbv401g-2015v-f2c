@@ -52,6 +52,14 @@ public class MockPlayer {
 	public Integer[] getScores() {
 		return scores;
 	}
+	
+	public Integer getTotalScore() {
+		int sum = 0;
+		for(int i=0; i<scores.length; i++) {
+			sum += scores[i]==null? 0 : scores[i];
+		}
+		return sum;
+	}
 
 	public void setScores(Integer[] scores) {
 		this.scores = scores;
