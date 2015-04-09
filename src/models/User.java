@@ -109,7 +109,7 @@ public class User implements Comparable<User>{
 		for(MockPlayer p : in) {
 			roster.addPlayer(p);
 		}
-		updateFinancialStatus(priceOfPlayers(in)-priceOfPlayers(out));
+		updateFinancialStatus(priceOfPlayers(out)-priceOfPlayers(in));
 	}
 	
 	public int compareTo(User u){

@@ -21,11 +21,13 @@ public class MarketView extends JPanel implements ActionListener {
 	private JList<MockPlayer> inList = new JList<MockPlayer>(inModel);
 	private DefaultListModel<MockPlayer> outModel = new DefaultListModel<>();
 	private JList<MockPlayer> outList = new JList<MockPlayer>(outModel);
-	private JList<MockPlayer> roster = new JList<MockPlayer>();
+	private DefaultListModel<MockPlayer> rosterModel = new DefaultListModel<>();
+	private JList<MockPlayer> roster = new JList<MockPlayer>(rosterModel);
 	private JList<MockPlayer> players = new JList<MockPlayer>();
-	private JLabel currentFinancialStatus = new JLabel();
+	private JLabel financeLbl = new JLabel();
 	private int netCost = 0;
 	private JLabel netCostLabel = new JLabel();
+	private JButton purchaseBtn = new JButton("Make purchase");
 	private JLabel errorLabel = new JLabel();
 	
 	public MarketView(Game game) {
@@ -53,7 +55,7 @@ public class MarketView extends JPanel implements ActionListener {
 		financeStatusBox.setBounds(350, 50, 250, 60);
 		add(financeStatusBox);
 		
-		JLabel financeLbl = new JLabel("Financial Status: " + currentUser.getFinancialStatus());
+		financeLbl.setText("Financial Status: " + currentUser.getFinancialStatus());
 		financeStatusBox.add(financeLbl);
 		netCostLabel.setText("Net cost of purchase: " + netCost);
 		financeStatusBox.add(netCostLabel);
@@ -83,7 +85,10 @@ public class MarketView extends JPanel implements ActionListener {
 			}
 		});
 		
-		roster = new JList<MockPlayer>(currentUser.getRoster().getPlayers().toArray(new MockPlayer[currentUser.getRoster().getPlayers().size()]));
+		//roster = new JList<MockPlayer>(currentUser.getRoster().getPlayers().toArray(new MockPlayer[currentUser.getRoster().getPlayers().size()]));
+		for(MockPlayer p : currentUser.getRoster().getPlayers()) {
+			rosterModel.addElement(p);
+		}
 		players = new JList<MockPlayer>(playersList.toArray(new MockPlayer[playersList.size()]));
 		
 		JScrollPane rosterScroll = new JScrollPane();
@@ -135,7 +140,6 @@ public class MarketView extends JPanel implements ActionListener {
 		purchaseBtnBox.setBounds(700, 540, 150, 50);
 		add(purchaseBtnBox);
 		
-		JButton purchaseBtn = new JButton("Make purchase");
 		purchaseBtn.addActionListener(this);
 		purchaseBtnBox.add(purchaseBtn);
 		
@@ -178,8 +182,25 @@ public class MarketView extends JPanel implements ActionListener {
 			} else if(btn.getText().equals("Make purchase")) {
 				if(!User.isBuyLegal(currentUser, new ArrayList<MockPlayer>(Collections.list(inModel.elements())), new ArrayList<MockPlayer>(Collections.list(outModel.elements())))) {
 					errorLabel.setVisible(true);
+				} else {
+					makePurchase();
 				}
 			}
+		}
+	}
+	
+	private void makePurchase() {
+		currentUser.makePurchase(new ArrayList<MockPlayer>(Collections.list(inModel.elements())), new ArrayList<MockPlayer>(Collections.list(outModel.elements())));
+		purchaseBtn.setEnabled(false);
+		errorLabel.setVisible(false);
+		netCost = 0;
+		netCostLabel.setText("Net cost of purchase: " + netCost);
+		financeLbl.setText("Financial Status: " + currentUser.getFinancialStatus());
+		inModel.removeAllElements();
+		outModel.removeAllElements();
+		rosterModel.removeAllElements();
+		for(MockPlayer p : currentUser.getRoster().getPlayers()) {
+			rosterModel.addElement(p);
 		}
 	}
 	

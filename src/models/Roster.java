@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -38,10 +40,12 @@ public class Roster {
 
 	public void setPlayers(List<MockPlayer> players) {
 		this.players = players;
+		sort();
 	}
 
 	public void addPlayer(MockPlayer player) {
 		players.add(player);
+		sort();
 	}
 	
 	public void removePlayer(MockPlayer player) {
@@ -50,6 +54,17 @@ public class Roster {
 	
 	public boolean contains(MockPlayer player) {
 		return players.contains(player);
+	}
+	
+	private void sort() {
+		Collections.sort(players, new Comparator<MockPlayer>() {
+			@Override
+			public int compare(MockPlayer lhs, MockPlayer rhs) {
+				if(lhs.getPosition().compareTo(rhs.getPosition()) == 0 && lhs.getTotalScore().compareTo(rhs.getTotalScore()) == 0) return lhs.getName().compareTo(rhs.getName());
+				if(lhs.getPosition().compareTo(rhs.getPosition()) == 0) return lhs.getTotalScore().compareTo(rhs.getTotalScore());
+				return lhs.getPosition().compareTo(rhs.getPosition());
+			}
+		});
 	}
 	
 	public boolean isLegal() {
