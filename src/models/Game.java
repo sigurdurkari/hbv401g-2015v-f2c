@@ -81,6 +81,12 @@ public class Game {
 		users.get(activeUser).getRoster().setName(name);
 	}
 	
+	public void updateUserStats() {
+		for(User u : users) {
+			u.updateUserStats(activeRound);
+		}
+	}
+	
 	public void nextTurn() {
 		activeUser = (activeUser+1)%userCount;
 		activeRound = activeRound + (activeUser+1)/userCount;

@@ -11,6 +11,7 @@ public class User implements Comparable<User>{
 	private Integer userScore;
 	private Integer financialStatus;
 	private Roster roster;
+	private UserStats userStats;
 	
 	public User() {}
 
@@ -19,6 +20,7 @@ public class User implements Comparable<User>{
 		this.userScore = userScore;
 		this.financialStatus = financialStatus;
 		this.roster = roster;
+		this.userStats = new UserStats();
 	}
 
 	public String getUserName() {
@@ -53,6 +55,20 @@ public class User implements Comparable<User>{
 		this.roster = roster;
 	}
 	
+	public UserStats getUserStats() {
+		return userStats;
+	}
+
+	public void setUserStats(UserStats userStats) {
+		this.userStats = userStats;
+	}
+	
+	public void updateUserStats(int round) {
+		for(MockPlayer p : roster.getPlayers()) {
+			userStats.updatePlayerStats(p, round, roster.getSubs().contains(p), roster.getCaptain().equals(p));
+		}
+	}
+
 	public void updateFinancialStatus(int diff) {
 		setFinancialStatus(getFinancialStatus() + diff);
 	}

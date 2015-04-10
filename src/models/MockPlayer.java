@@ -10,6 +10,10 @@ public class MockPlayer {
 	
 	public MockPlayer() {}
 	
+	public MockPlayer(String name) {
+		this.name = name;
+	}
+	
 	public MockPlayer(String name, String team, PlayerPosition position, Integer price) {
 		this.name = name;
 		this.team = team;
