@@ -3,19 +3,25 @@ package models;
 import java.util.List;
 import java.util.ArrayList;
 
-public class MockTeam {
+public class MockTeam implements Comparable<MockTeam>{
 	
 	private String name;
 	private List<MockPlayer> players = new ArrayList<>();
+	private Integer score;
 	
 	public MockTeam() {}
 	
 	public MockTeam(String name) {
 		this.name = name;
+		score = (int)(Math.random()*30);
 	}
 
 	public String getName() {
 		return name;
+	}
+	
+	public Integer getScore(){
+		return score;
 	}
 
 	public void setName(String name) {
@@ -47,5 +53,10 @@ public class MockTeam {
 		}
 		return playersByPos;
 	}
+	
+	public int compareTo(MockTeam team){
+		return (team.getScore()).compareTo(this.getScore());
+	}
+	
 
 }
