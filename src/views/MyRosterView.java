@@ -159,12 +159,12 @@ public class MyRosterView extends JPanel {
 		add(lblPos3, gbc_lblPos3);
 		
 		JButton btnBench3 = new JButton("Put on Bench");
-		btnBench3.addActionListener(new ActionListener() {
+		/*btnBench3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnField2.setEnabled(true);
 				btnBench1.setEnabled(false);
 			}
-		});
+		});*/
 		GridBagConstraints gbc_btnBench3 = new GridBagConstraints();
 		gbc_btnBench3.insets = new Insets(0, 0, 5, 5);
 		gbc_btnBench3.gridx = 3;

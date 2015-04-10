@@ -80,7 +80,7 @@ public class MarketView extends JPanel implements ActionListener {
 			@Override
 			public int compare(MockPlayer lhs, MockPlayer rhs) {
 				if(lhs.getPosition().compareTo(rhs.getPosition()) == 0 && lhs.getTotalScore().compareTo(rhs.getTotalScore()) == 0) return lhs.getName().compareTo(rhs.getName());
-				if(lhs.getPosition().compareTo(rhs.getPosition()) == 0) return lhs.getTotalScore().compareTo(rhs.getTotalScore());
+				if(lhs.getPosition().compareTo(rhs.getPosition()) == 0) return -lhs.getTotalScore().compareTo(rhs.getTotalScore());
 				return lhs.getPosition().compareTo(rhs.getPosition());
 			}
 		});

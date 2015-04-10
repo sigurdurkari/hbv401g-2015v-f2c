@@ -19,6 +19,9 @@ public class Roster {
 	
 	private String name;
 	private List<MockPlayer> players = new ArrayList<>();
+	private List<MockPlayer> onField = new ArrayList<>();
+	private List<MockPlayer> subs = new ArrayList<>();
+	private MockPlayer captain;
 	
 	public Roster() {}
 	
@@ -40,28 +43,77 @@ public class Roster {
 
 	public void setPlayers(List<MockPlayer> players) {
 		this.players = players;
+		this.onField = players.subList(0, 11);
+		this.subs = players.subList(11, players.size());
 		sort();
 	}
 
 	public void addPlayer(MockPlayer player) {
 		players.add(player);
+		if(onField.size() < 11) {
+			onField.add(player);
+		} else {
+			subs.add(player);
+		}
 		sort();
 	}
 	
 	public void removePlayer(MockPlayer player) {
 		players.remove(player);
+		onField.remove(player);
+		subs.remove(player);
 	}
 	
 	public boolean contains(MockPlayer player) {
 		return players.contains(player);
 	}
 	
+	public List<MockPlayer> getOnField() {
+		return onField;
+	}
+
+	public void setOnField(List<MockPlayer> onField) {
+		this.onField = onField;
+	}
+
+	public List<MockPlayer> getSubs() {
+		return subs;
+	}
+
+	public void setSubs(List<MockPlayer> subs) {
+		this.subs = subs;
+	}
+
+	public MockPlayer getCaptain() {
+		return captain;
+	}
+
+	public void setCaptain(MockPlayer captain) {
+		this.captain = captain;
+	}
+
 	private void sort() {
 		Collections.sort(players, new Comparator<MockPlayer>() {
 			@Override
 			public int compare(MockPlayer lhs, MockPlayer rhs) {
 				if(lhs.getPosition().compareTo(rhs.getPosition()) == 0 && lhs.getTotalScore().compareTo(rhs.getTotalScore()) == 0) return lhs.getName().compareTo(rhs.getName());
-				if(lhs.getPosition().compareTo(rhs.getPosition()) == 0) return lhs.getTotalScore().compareTo(rhs.getTotalScore());
+				if(lhs.getPosition().compareTo(rhs.getPosition()) == 0) return -lhs.getTotalScore().compareTo(rhs.getTotalScore());
+				return lhs.getPosition().compareTo(rhs.getPosition());
+			}
+		});
+		Collections.sort(onField, new Comparator<MockPlayer>() {
+			@Override
+			public int compare(MockPlayer lhs, MockPlayer rhs) {
+				if(lhs.getPosition().compareTo(rhs.getPosition()) == 0 && lhs.getTotalScore().compareTo(rhs.getTotalScore()) == 0) return lhs.getName().compareTo(rhs.getName());
+				if(lhs.getPosition().compareTo(rhs.getPosition()) == 0) return -lhs.getTotalScore().compareTo(rhs.getTotalScore());
+				return lhs.getPosition().compareTo(rhs.getPosition());
+			}
+		});
+		Collections.sort(subs, new Comparator<MockPlayer>() {
+			@Override
+			public int compare(MockPlayer lhs, MockPlayer rhs) {
+				if(lhs.getPosition().compareTo(rhs.getPosition()) == 0 && lhs.getTotalScore().compareTo(rhs.getTotalScore()) == 0) return lhs.getName().compareTo(rhs.getName());
+				if(lhs.getPosition().compareTo(rhs.getPosition()) == 0) return -lhs.getTotalScore().compareTo(rhs.getTotalScore());
 				return lhs.getPosition().compareTo(rhs.getPosition());
 			}
 		});
@@ -83,6 +135,10 @@ public class Roster {
 		if(getPositionCount(PlayerPosition.FORWARD) < MIN_FORWARD || getPositionCount(PlayerPosition.FORWARD) > MAX_FORWARD) {
 			return false;
 		}
+		return true;
+	}
+	
+	public boolean onFieldIsLegal() {
 		return true;
 	}
 	
