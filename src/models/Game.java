@@ -48,6 +48,22 @@ public class Game {
 	public void setTeams(List<MockTeam> teams) {
 		this.teams = teams;
 	}
+	
+	public List<MockPlayer> getPlayers() {
+		List<MockPlayer> players = new ArrayList<>();
+		for(MockTeam t : getTeams()) {
+			players.addAll(t.getPlayers());
+		}
+		Collections.sort(players, new Comparator<MockPlayer>() {
+			@Override
+			public int compare(MockPlayer lhs, MockPlayer rhs) {
+				if(lhs.getPosition().compareTo(rhs.getPosition()) == 0 && lhs.getTotalScore().compareTo(rhs.getTotalScore()) == 0) return lhs.getName().compareTo(rhs.getName());
+				if(lhs.getPosition().compareTo(rhs.getPosition()) == 0) return -lhs.getTotalScore().compareTo(rhs.getTotalScore());
+				return lhs.getPosition().compareTo(rhs.getPosition());
+			}
+		});
+		return players;
+	}
 
 	public Schedule getSchedule() {
 		return schedule;

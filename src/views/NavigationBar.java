@@ -13,13 +13,13 @@ public class NavigationBar extends JTabbedPane {
 	
 
 	public NavigationBar(Game game) {
-		JPanel MyRosterView = new MakeRosterPanel();
+		JPanel MyRosterView = new MyRosterView();
 		addTab("My Roster",MyRosterView);
 		JPanel MarketView = new MarketView(game);
 		addTab("Market", MarketView);
 		JPanel StandingsView = new StandingsView(game);
 		addTab("Standings",StandingsView);
-		JPanel StatisticsView = new StatisticsView(game);
+		JTabbedPane StatisticsView = new StatisticsView(game);
 		addTab("Statistics", StatisticsView);
 	}
 	

@@ -1,6 +1,8 @@
 package views;
 
 import javax.swing.*;
+import java.util.*;
+import java.util.List;
 
 import tests.BasicEntities;
 
@@ -23,6 +25,9 @@ public class StatisticsView extends JTabbedPane {
 		JPanel rosterPanel = new JPanel();
 		addTab("My roster statistics",rosterPanel);
 		rosterPanel.setLayout(null);
+		JPanel playerPanel = new JPanel();
+		addTab("All player statistics",playerPanel);
+		playerPanel.setLayout(null);
 		
 		JLabel userName = new JLabel(currentUser.getUserName());
 		JLabel rstrName = new JLabel(currentUser.getRoster().getName());
@@ -31,6 +36,14 @@ public class StatisticsView extends JTabbedPane {
 		rosterPanel.add(nameBox);
 		nameBox.add(userName);
 		nameBox.add(rstrName);
+		
+		JLabel userName2 = new JLabel(currentUser.getUserName());
+		JLabel rstrName2 = new JLabel(currentUser.getRoster().getName());
+		Box nameBox2 = Box.createVerticalBox();
+		nameBox2.setBounds(50, 50, 150, 60);
+		playerPanel.add(nameBox2);
+		nameBox2.add(userName2);
+		nameBox2.add(rstrName2);
 		
 		Box rosterBox = Box.createVerticalBox();
 		rosterBox.setBounds(50,120,800,400);
@@ -96,10 +109,37 @@ public class StatisticsView extends JTabbedPane {
 		
 		JTable table = new JTable(rowData,columnNames);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
-		table.getColumnModel().getColumn(0).setMinWidth(200);
+		table.getColumnModel().getColumn(0).setMinWidth(250);
 		JScrollPane statsScroll = new JScrollPane(table);
 		
 		rosterBox.add(statsScroll);
+		
+		Box playerBox = Box.createVerticalBox();
+		playerBox.setBounds(50,120,800,400);
+		playerPanel.add(playerBox);
+		
+		List<MockPlayer> players = game.getPlayers();
+		Object[][] rowData2 = new Object[game.getPlayers().size()][12];
+		for(int i=0; i<players.size(); i++) {
+			MockPlayer p = players.get(i);
+			rowData2[i][0] = p.getName();
+			for(int j=1; j<game.getActiveRound(); j++) {
+				rowData2[i][j] = p.getScores()[j-1];
+			}
+			for(int j=game.getActiveRound(); j<=10; j++) {
+				if(game.getActiveRound()!=0) {
+					rowData2[i][j] = "";
+				}
+			}
+			rowData2[i][11] = p.getTotalScore();
+		}
+		
+		JTable table2 = new JTable(rowData2,columnNames);
+		table2.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+		table2.getColumnModel().getColumn(0).setMinWidth(250);
+		JScrollPane playerScroll = new JScrollPane(table2);
+		
+		playerBox.add(playerScroll);
 	}
 	
 	public static class StatsCellRender extends JPanel implements ListCellRenderer{
