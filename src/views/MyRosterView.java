@@ -1,22 +1,49 @@
 package views;
 
-import javax.swing.JPanel;
+
+import javax.swing.*;
+
 import java.awt.GridBagLayout;
+
 import javax.swing.JLabel;
+
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
+import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
+
 import javax.swing.JButton;
+
+import tests.BasicEntities;
+import views.MakeRosterPanel.PlayerCellRender;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Collections;
 
-public class MyRosterView extends JPanel {
+import models.*;
+
+public class MyRosterView extends JPanel implements ActionListener {
+	
+	private Game game;
+	private static User currentUser;
+	private DefaultListModel<MockPlayer> onFieldModel = new DefaultListModel<>();
+	private JList<MockPlayer> onFieldList = new JList<>(onFieldModel);
+	private DefaultListModel<MockPlayer> subsModel = new DefaultListModel<>();
+	private JList<MockPlayer> subsList = new JList<>(subsModel);
 
 	/**
 	 * Create the panel.
 	 */
-	public MyRosterView() {
+	public MyRosterView(Game game) {
+		this.game = game;
+		this.currentUser = game.getUsers().get(game.getActiveUser());
+		setLayout(null);
 		
-		GridBagLayout gridBagLayout = new GridBagLayout();
+		/*GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
@@ -159,12 +186,12 @@ public class MyRosterView extends JPanel {
 		add(lblPos3, gbc_lblPos3);
 		
 		JButton btnBench3 = new JButton("Put on Bench");
-		/*btnBench3.addActionListener(new ActionListener() {
+		btnBench3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnField2.setEnabled(true);
 				btnBench1.setEnabled(false);
 			}
-		});*/
+		});
 		GridBagConstraints gbc_btnBench3 = new GridBagConstraints();
 		gbc_btnBench3.insets = new Insets(0, 0, 5, 5);
 		gbc_btnBench3.gridx = 3;
@@ -381,8 +408,143 @@ public class MyRosterView extends JPanel {
 		gbc_btnBench11.insets = new Insets(0, 0, 0, 5);
 		gbc_btnBench11.gridx = 3;
 		gbc_btnBench11.gridy = 12;
-		add(btnBench11, gbc_btnBench11);
+		add(btnBench11, gbc_btnBench11);*/
 		
+		
+		JLabel userName = new JLabel(currentUser.getUserName());
+		JLabel rstrName = new JLabel(currentUser.getRoster().getName());
+		Box nameBox = Box.createVerticalBox();
+		nameBox.setBounds(50, 50, 150, 60);
+		add(nameBox);
+		nameBox.add(userName);
+		nameBox.add(rstrName);
+		
+		Box rosterBox = Box.createVerticalBox();
+		rosterBox.setBounds(50,120,800,400);
+		add(rosterBox);
+		
+		JScrollPane onFieldScroll = new JScrollPane();
+		JScrollPane subsScroll = new JScrollPane();
+		
+		onFieldScroll.getViewport().add(onFieldList);
+		subsScroll.getViewport().add(subsList);
+		
+		onFieldList.setCellRenderer(new RosterCellRender());
+		onFieldList.setVisibleRowCount(15);
+		subsList.setCellRenderer(new RosterCellRender());
+		subsList.setVisibleRowCount(5);
+		
+		for(MockPlayer p : currentUser.getRoster().getOnField()) {
+			onFieldModel.addElement(p);
 		}
+		for(MockPlayer p : currentUser.getRoster().getSubs()) {
+			subsModel.addElement(p);
+		}
+		
+		Box btnBox = Box.createHorizontalBox();
+		JButton subBtn = new JButton("Make substitution");
+		subBtn.addActionListener(this);
+		btnBox.add(subBtn);
+		JButton cptBtn = new JButton("Make captain");
+		cptBtn.addActionListener(this);
+		btnBox.add(cptBtn);
+		
+		rosterBox.add(onFieldScroll);
+		rosterBox.add(btnBox);
+		btnBox.setAlignmentX(CENTER_ALIGNMENT);
+		rosterBox.add(subsScroll);
+	}
+	
+	public static class RosterCellRender extends JPanel implements ListCellRenderer {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		JLabel left, middle, right;
+	
+		public RosterCellRender() {
+			GridLayout layout = new GridLayout(1, 3);
+			layout.setHgap(10);
+			setLayout(layout);
+			left = new JLabel();
+			middle = new JLabel();
+			right = new JLabel();
+			left.setOpaque(true);
+			middle.setOpaque(true);
+			right.setOpaque(true);
+			add(left);
+			add(middle);
+			add(right);
+		}
+		
+		public Component getListCellRendererComponent(JList list,Object value,int index,boolean isSelected,boolean cellHasFocus){ 
+			String leftData = ((MockPlayer)value).getName();
+			String middleData = ((MockPlayer)value).getPosition().name().substring(0,1) + ((MockPlayer)value).getPosition().name().toLowerCase().substring(1);
+			String rightData = ((MockPlayer)value).equals(currentUser.getRoster().getCaptain()) ? "Captain" : "";
+			left.setText(leftData);
+			middle.setText(middleData);
+			right.setText(rightData);
+			if(isSelected){
+				left.setBackground(list.getSelectionBackground());
+				left.setForeground(list.getSelectionForeground());
+				middle.setBackground(list.getSelectionBackground());
+				middle.setForeground(list.getSelectionForeground());
+				right.setBackground(list.getSelectionBackground());
+				right.setForeground(list.getSelectionForeground());
+			} else {
+				left.setBackground(list.getBackground());
+				left.setForeground(list.getForeground());
+				middle.setBackground(list.getBackground());
+				middle.setForeground(list.getForeground());
+				right.setBackground(list.getBackground());
+				right.setForeground(list.getForeground());
+			}
+			setEnabled(list.isEnabled());
+			setFont(list.getFont());
+			return this;
+		}
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() instanceof JButton) {
+			JButton btn = (JButton)e.getSource();
+			if(btn.getText().equals("Make substitution")) {
+				if(onFieldList.getSelectedValue() instanceof MockPlayer && subsList.getSelectedValue() instanceof MockPlayer) {
+					currentUser.getRoster().makeSubstitution(onFieldList.getSelectedValue(), subsList.getSelectedValue());
+					refresh();
+				}
+			} else if(btn.getText().equals("Make captain")) {
+				if(onFieldList.getSelectedValue() instanceof MockPlayer) {
+					currentUser.getRoster().setCaptain(onFieldList.getSelectedValue());
+					refresh();
+				}
+			}
+		}
+	}
+	
+	public void refresh() {
+		onFieldModel.removeAllElements();
+		for(MockPlayer p : currentUser.getRoster().getOnField()) {
+			onFieldModel.addElement(p);
+		}
+		subsModel.removeAllElements();
+		for(MockPlayer p : currentUser.getRoster().getSubs()) {
+			subsModel.addElement(p);
+		}
+	}
+	
+	public static void main(String[] args) {
+		Game game = BasicEntities.generateGame();
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
+		frame.setSize(900,700);
+		JPanel panel = new MyRosterView(game);
+		frame.add(panel);
+		frame.setVisible(true);
+		frame.setContentPane(panel);
+	}
 
 }

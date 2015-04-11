@@ -91,6 +91,19 @@ public class Roster {
 	public void setCaptain(MockPlayer captain) {
 		this.captain = captain;
 	}
+	
+	public void makeSubstitution(MockPlayer out, MockPlayer in) {
+		if(onField.contains(out) && subs.contains(in)) {
+			onField.remove(out);
+			onField.add(in);
+			subs.remove(in);
+			subs.add(out);
+			if(out.equals(getCaptain())) {
+				setCaptain(null);
+			}
+		}
+		sort();
+	}
 
 	private void sort() {
 		Collections.sort(players, new Comparator<MockPlayer>() {
@@ -139,12 +152,35 @@ public class Roster {
 	}
 	
 	public boolean onFieldIsLegal() {
+		if(onField.size()!=11) {
+			return false;
+		}
+		if(getOnFieldPositionCount(PlayerPosition.GOAL) < 1 || getOnFieldPositionCount(PlayerPosition.GOAL) > 1) {
+			return false;
+		}
+		if(getOnFieldPositionCount(PlayerPosition.DEFENCE) < 2 || getOnFieldPositionCount(PlayerPosition.DEFENCE) > 5) {
+			return false;
+		}
+		if(getOnFieldPositionCount(PlayerPosition.MIDFIELD) < 2 || getOnFieldPositionCount(PlayerPosition.MIDFIELD) > 5) {
+			return false;
+		}
+		if(getOnFieldPositionCount(PlayerPosition.FORWARD) < 1 || getOnFieldPositionCount(PlayerPosition.FORWARD) > 3) {
+			return false;
+		}
 		return true;
 	}
 	
 	public int getPositionCount(PlayerPosition position) {
 		int count = 0;
 		for(MockPlayer p : players) {
+			count += p.getPosition()==position ? 1 : 0;
+		}
+		return count;
+	}
+	
+	public int getOnFieldPositionCount(PlayerPosition position) {
+		int count = 0;
+		for(MockPlayer p : onField) {
 			count += p.getPosition()==position ? 1 : 0;
 		}
 		return count;

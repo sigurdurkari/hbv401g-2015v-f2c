@@ -1,26 +1,36 @@
 package views;
 
 import javax.swing.*;
+import javax.swing.event.*;
 import java.awt.*;
+import java.awt.event.*;
 import views.*;
 import tests.*;
 import models.*;
 
 
-public class NavigationBar extends JTabbedPane {
+public class NavigationBar extends JTabbedPane implements ChangeListener {
 
 	private static final long serialVersionUID = 1L;
+	private MyRosterView myRosterView;
 	
 
 	public NavigationBar(Game game) {
-		JPanel MyRosterView = new MyRosterView();
-		addTab("My Roster",MyRosterView);
-		JPanel MarketView = new MarketView(game);
-		addTab("Market", MarketView);
-		JPanel StandingsView = new StandingsView(game);
-		addTab("Standings",StandingsView);
-		JTabbedPane StatisticsView = new StatisticsView(game);
-		addTab("Statistics", StatisticsView);
+		myRosterView = new MyRosterView(game);
+		addTab("My Roster",myRosterView);
+		JPanel marketView = new MarketView(game);
+		addTab("Market", marketView);
+		JPanel standingsView = new StandingsView(game);
+		addTab("Standings",standingsView);
+		JTabbedPane statisticsView = new StatisticsView(game);
+		addTab("Statistics", statisticsView);
+
+		addChangeListener(this);
+	}
+	
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		myRosterView.refresh();
 	}
 	
 	public static void main(String[] args){
