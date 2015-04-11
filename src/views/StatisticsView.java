@@ -8,7 +8,7 @@ import java.awt.*;
 
 import models.*;
 
-public class StatisticsView extends JPanel {
+public class StatisticsView extends JTabbedPane {
 
 	private Game game;
 	private User currentUser;
@@ -19,21 +19,24 @@ public class StatisticsView extends JPanel {
 		this.game = game;
 		this.currentUser = game.getUsers().get(game.getActiveUser());
 		this.userStats = currentUser.getUserStats();
-		setLayout(null);
+		
+		JPanel rosterPanel = new JPanel();
+		addTab("My roster statistics",rosterPanel);
+		rosterPanel.setLayout(null);
 		
 		JLabel userName = new JLabel(currentUser.getUserName());
 		JLabel rstrName = new JLabel(currentUser.getRoster().getName());
 		Box nameBox = Box.createVerticalBox();
 		nameBox.setBounds(50, 50, 150, 60);
-		add(nameBox);
+		rosterPanel.add(nameBox);
 		nameBox.add(userName);
 		nameBox.add(rstrName);
 		
 		Box rosterBox = Box.createVerticalBox();
 		rosterBox.setBounds(50,120,800,400);
-		add(rosterBox);
+		rosterPanel.add(rosterBox);
 		
-		playerStatsList = new JList<UserStats.PlayerStats>(userStats.getPlayerStats().toArray(new UserStats.PlayerStats[userStats.getPlayerStats().size()]));
+		/*playerStatsList = new JList<UserStats.PlayerStats>(userStats.getPlayerStats().toArray(new UserStats.PlayerStats[userStats.getPlayerStats().size()]));
 		
 		JScrollPane rosterScroll = new JScrollPane();
 		rosterScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -73,7 +76,30 @@ public class StatisticsView extends JPanel {
 		
 		rosterBox.add(columnScroll);
 		rosterBox.add(rosterScroll);
-		rosterBox.add(totalScroll);
+		rosterBox.add(totalScroll);*/
+		
+		Object[] columnNames = {"Player","#1","#2","#3","#4","#5","#6","#7","#8","#9","#10","Total"};
+		Object[][] rowData = new Object[userStats.getPlayerStats().size()+1][12];
+		for(int i=0;i<userStats.getPlayerStats().size();i++) {
+			UserStats.PlayerStats p = userStats.getPlayerStats().get(i);
+			rowData[i][0] = p.getPlayer().getName();
+			for(int j=1;j<=10;j++) {
+				rowData[i][j] = p.getStats()[j+1];
+			}
+			rowData[i][11] = p.getTotalScoreString();
+		}
+		rowData[userStats.getPlayerStats().size()][0] = "Total per round";
+		for(int i=1;i<=10;i++) {
+			rowData[userStats.getPlayerStats().size()][i] = userStats.getScoreByRound()[i-1];
+		}
+		rowData[userStats.getPlayerStats().size()][11] = userStats.getTotalScore();
+		
+		JTable table = new JTable(rowData,columnNames);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+		table.getColumnModel().getColumn(0).setMinWidth(200);
+		JScrollPane statsScroll = new JScrollPane(table);
+		
+		rosterBox.add(statsScroll);
 	}
 	
 	public static class StatsCellRender extends JPanel implements ListCellRenderer{
@@ -120,7 +146,7 @@ public class StatisticsView extends JPanel {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
 		frame.setSize(900,700);
-		JPanel panel = new StatisticsView(game);
+		JTabbedPane panel = new StatisticsView(game);
 		frame.add(panel);
 		frame.setVisible(true);
 		frame.setContentPane(panel);
