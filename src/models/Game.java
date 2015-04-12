@@ -97,6 +97,11 @@ public class Game {
 		users.get(activeUser).getRoster().setName(name);
 	}
 	
+	public void setActiveUser(User user) {
+		User u = users.get(activeUser);
+		u = new User(user.getUserName(), new Integer(0), STARTING_CASH, user.getRoster());
+	}
+	
 	public void updateUserStats() {
 		for(User u : users) {
 			u.updateUserStats(activeRound);

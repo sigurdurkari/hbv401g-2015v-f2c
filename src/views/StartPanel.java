@@ -11,36 +11,34 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-public class StartPanel implements ActionListener {
+import tests.BasicEntities;
+
+public class StartPanel extends JPanel implements ActionListener {
 	
 	private Integer userCount = 2;
 	private MainFrame mainFrame;
 	
 	public StartPanel(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
-	}
 	
-	public JPanel createStartPanel() {
-		JPanel startPanel = new JPanel();
-		startPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		startPanel.setLayout(null);
+		setBorder(new EmptyBorder(5, 5, 5, 5));
+		setLayout(null);
 		
 		JLabel lblFantasyFootball = new JLabel("Fantasy Football", JLabel.CENTER);
 		lblFantasyFootball.setBounds(125, 70, 200, 15);
-		startPanel.add(lblFantasyFootball);
+		add(lblFantasyFootball);
 		
 		String[] possibleUserCount= {"2","3","4","5","6"};
 		JComboBox selectUserCount = new JComboBox(possibleUserCount);
 		selectUserCount.setBounds(200, 130, 50, 20);
 		selectUserCount.addActionListener(this);
-		startPanel.add(selectUserCount);
+		add(selectUserCount);
 		
 		JButton btnStart = new JButton("Start Game");
-		btnStart.setBounds(165, 170, 120, 40);
+		btnStart.setBounds(300, 400, 200, 100);
 		btnStart.addActionListener(this);
-		startPanel.add(btnStart);
+		add(btnStart);
 		
-		return startPanel;
 	}
 	
 	@Override

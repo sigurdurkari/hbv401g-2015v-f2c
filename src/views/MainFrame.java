@@ -3,7 +3,9 @@ package views;
 import models.*;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,9 +19,10 @@ public class MainFrame extends JFrame {
 	
 	private ActivePanel activePanel = ActivePanel.START_PANEL;
 	private Game game;
+	private StartPanel startPanel;
+	private MakeRosterPanel makeRosterPanel;
 
 	private JPanel contentPane;
-	private StartPanel startPanel;
 
 	/**
 	 * Launch the application.
@@ -42,30 +45,68 @@ public class MainFrame extends JFrame {
 	 */
 	public MainFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
-		
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+		setSize(900,700);
 		startPanel = new StartPanel(this);
-		setPanel(startPanel.createStartPanel());
+		add(startPanel);
+		setVisible(true);
+		//setContentPane(contentPane);
+		
+		
 	}
 	
 	public void setPanel(JPanel contentPane) {
-		this.contentPane = contentPane;
-		setContentPane(contentPane);
+		//this.contentPane = contentPane;
+		getContentPane().removeAll();
+		getContentPane().invalidate();
+		
+		getContentPane().add(contentPane);
+		getContentPane().revalidate();
+	}
+	
+	public void setMakeRosterPanel() {
+		/*makeRosterPanel = new MakeRosterPanel();
+		setPanel(makeRosterPanel);*/
+		remove(startPanel);
+		add(new MakeRosterPanel());
+	}
+	
+	public void setNavigationBar() {
+		getContentPane().removeAll();
+		getContentPane().invalidate();
+		
+		getContentPane().add(new NavigationBar(game));
+		getContentPane().revalidate();
 	}
 	
 	public void nextPanel() {
 		switch (getActivePanel()){
 			case START_PANEL:
 				setActivePanel(ActivePanel.MAKE_ROSTER_PANEL);
+				setMakeRosterPanel();
+				break;
 			case MAKE_ROSTER_PANEL:
-				setActivePanel(ActivePanel.NAVIGATION_BAR);
+				game.setActiveUser(makeRosterPanel.getUser());
+				game.nextTurn();
+				if(game.getActiveRound()>0) {
+					setActivePanel(ActivePanel.NAVIGATION_BAR);
+					setNavigationBar();
+				} else {
+					setMakeRosterPanel();
+				}
+				break;
 			case NAVIGATION_BAR:
-				setActivePanel(ActivePanel.END_GAME);
+				game.nextTurn();
+				if(game.getActiveRound()>0) {
+					setActivePanel(ActivePanel.END_GAME);
+					setPanel(new EndPanel(game));
+				} else {
+					setNavigationBar();
+				}
+				break;
 			case END_GAME:
+				break;
 		}
 	}
 

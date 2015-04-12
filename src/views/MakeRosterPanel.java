@@ -127,6 +127,15 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		rosterName=name;
 	}
 	
+	public User getUser() {
+		User u = new User(user);
+		Roster r = new Roster(rosterName);
+		ArrayList<MockPlayer> rosterList = Collections.list(rosterModel.elements());
+		r.setPlayers(rosterList);
+		u.setRoster(r);
+		return u;
+	}
+	
 	
 	public static class PlayerCellRender extends JPanel implements ListCellRenderer{
 		/**

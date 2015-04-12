@@ -14,6 +14,10 @@ public class User implements Comparable<User>{
 	private UserStats userStats;
 	
 	public User() {}
+	
+	public User(String userName) {
+		this.userName = userName;
+	}
 
 	public User(String userName, Integer userScore, Integer financialStatus, Roster roster) {
 		this.userName = userName;
