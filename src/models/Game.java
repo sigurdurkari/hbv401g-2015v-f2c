@@ -197,7 +197,7 @@ public class Game {
 	}
 	
 	public void nextTurn() {
+		activeRound += (activeUser+1)/userCount;
 		activeUser = (activeUser+1)%userCount;
-		activeRound = activeRound + (activeUser+1)/userCount;
 	}
 }

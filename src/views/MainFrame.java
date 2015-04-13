@@ -7,11 +7,13 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
+import javax.swing.event.*;
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.border.EmptyBorder;
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements ActionListener {
 	
 	public enum ActivePanel {
 		START_PANEL,MAKE_ROSTER_PANEL,NAVIGATION_BAR,END_GAME;
@@ -67,16 +69,42 @@ public class MainFrame extends JFrame {
 	
 	public void setMakeRosterPanel() {
 		/*makeRosterPanel = new MakeRosterPanel();
-		setPanel(makeRosterPanel);*/
+		setPanel(makeRosterPanel);
 		remove(startPanel);
-		add(new MakeRosterPanel());
+		add(new MakeRosterPanel());*/
+		
+		getContentPane().removeAll();
+		getContentPane().invalidate();
+		
+		MakeRosterPanel panel = new MakeRosterPanel(game);
+		getContentPane().add(panel);
+		getContentPane().revalidate();
+		
+		JButton btn = new JButton("Next turn");
+		btn.addActionListener(new MakeRosterPanelListener(game,panel,this));
+		btn.setBounds(650,550,150,50);
+		panel.add(btn);
 	}
 	
 	public void setNavigationBar() {
 		getContentPane().removeAll();
 		getContentPane().invalidate();
 		
-		getContentPane().add(new NavigationBar(game));
+		JTabbedPane panel = new NavigationBar(game);
+		getContentPane().add(panel);
+		getContentPane().revalidate();
+
+		JButton btn = new JButton("Next turn");
+		btn.addActionListener(this);
+		btn.setBounds(650,550,150,50);
+		panel.add(btn);
+	}
+	
+	public void setEndPanel() {
+		getContentPane().removeAll();
+		getContentPane().invalidate();
+		
+		getContentPane().add(new EndPanel(game));
 		getContentPane().revalidate();
 	}
 	
@@ -87,7 +115,6 @@ public class MainFrame extends JFrame {
 				setMakeRosterPanel();
 				break;
 			case MAKE_ROSTER_PANEL:
-				game.setActiveUser(makeRosterPanel.getUser());
 				game.nextTurn();
 				if(game.getActiveRound()>0) {
 					setActivePanel(ActivePanel.NAVIGATION_BAR);
@@ -98,9 +125,9 @@ public class MainFrame extends JFrame {
 				break;
 			case NAVIGATION_BAR:
 				game.nextTurn();
-				if(game.getActiveRound()>0) {
+				if(game.getActiveRound()>10) {
 					setActivePanel(ActivePanel.END_GAME);
-					setPanel(new EndPanel(game));
+					setEndPanel();
 				} else {
 					setNavigationBar();
 				}
@@ -126,5 +153,31 @@ public class MainFrame extends JFrame {
 		this.activePanel = activePanel;
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() instanceof JButton) {
+			nextPanel();
+		}
+	}
 	
+	public static class MakeRosterPanelListener implements ActionListener {
+		
+		private Game game;
+		private MakeRosterPanel panel;
+		private MainFrame frame;
+		
+		public MakeRosterPanelListener(Game game, MakeRosterPanel panel, MainFrame frame) {
+			this.game = game;
+			this.panel = panel;
+			this.frame = frame;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(panel.getRoster().isLegal()) {
+				panel.setActiveUser();
+				frame.nextPanel();
+			}
+		}
+	}
 }

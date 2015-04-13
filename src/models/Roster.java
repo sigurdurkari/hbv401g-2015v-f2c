@@ -43,8 +43,8 @@ public class Roster {
 
 	public void setPlayers(List<MockPlayer> players) {
 		this.players = players;
-		this.onField = players.subList(0, 11);
-		this.subs = players.subList(11, players.size());
+		this.onField = players.size()>=11 ? players.subList(0, 11) : players;
+		this.subs = players.size()>=11 ? players.subList(11, players.size()) : new ArrayList<MockPlayer>();
 		sort();
 	}
 
@@ -95,8 +95,8 @@ public class Roster {
 	public void makeSubstitution(MockPlayer out, MockPlayer in) {
 		if(onField.contains(out) && subs.contains(in)) {
 			onField.remove(out);
-			onField.add(in);
 			subs.remove(in);
+			onField.add(in);
 			subs.add(out);
 			if(out.equals(getCaptain())) {
 				setCaptain(null);
