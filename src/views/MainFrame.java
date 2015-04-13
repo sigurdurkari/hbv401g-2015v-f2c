@@ -95,24 +95,29 @@ public class MainFrame extends JFrame implements ActionListener {
 		getContentPane().revalidate();
 
 		JButton btn1 = new JButton("Next turn");
-		btn1.addActionListener(this);
-		btn1.setBounds(650,550,150,50);
+		btn1.addActionListener(new NavigationBarListener(game,this));
+		btn1.setBounds(680,50,150,40);
 		navigationBar.getMyRosterView().add(btn1);
 		
 		JButton btn2 = new JButton("Next turn");
-		btn2.addActionListener(this);
-		btn2.setBounds(650,550,150,50);
+		btn2.addActionListener(new NavigationBarListener(game,this));
+		btn2.setBounds(680,50,150,40);
 		navigationBar.getMarketView().add(btn2);
 		
 		JButton btn3 = new JButton("Next turn");
-		btn3.addActionListener(this);
-		btn3.setBounds(650,550,150,50);
+		btn3.addActionListener(new NavigationBarListener(game,this));
+		btn3.setBounds(680,50,150,40);
 		navigationBar.getStandingsView().add(btn3);
 		
 		JButton btn4 = new JButton("Next turn");
-		btn4.addActionListener(this);
-		btn4.setBounds(650,550,150,50);
-		navigationBar.getStatisticsView().add(btn4);
+		btn4.addActionListener(new NavigationBarListener(game,this));
+		btn4.setBounds(680,50,150,40);
+		navigationBar.getStatisticsView().getRosterPanel().add(btn4);
+		
+		JButton btn5 = new JButton("Next turn");
+		btn5.addActionListener(new NavigationBarListener(game,this));
+		btn5.setBounds(680,50,150,40);
+		navigationBar.getStatisticsView().getPlayerPanel().add(btn5);
 	}
 	
 	public void setEndPanel() {
@@ -193,6 +198,26 @@ public class MainFrame extends JFrame implements ActionListener {
 				panel.updateUserName();
 				panel.updateRosterName();
 				panel.setActiveUser();
+				frame.nextPanel();
+			}
+		}
+	}
+	
+	public static class NavigationBarListener implements ActionListener {
+		
+		private Game game;
+		private User currentUser;
+		private MainFrame frame;
+		
+		public NavigationBarListener(Game game, MainFrame frame) {
+			this.game = game;
+			this.currentUser = game.getUsers().get(game.getActiveUser());
+			this.frame = frame;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(currentUser.getRoster().onFieldIsLegal()) {
 				frame.nextPanel();
 			}
 		}

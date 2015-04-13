@@ -15,7 +15,7 @@ import tests.BasicEntities;
 
 public class StartPanel extends JPanel implements ActionListener {
 	
-	private Integer userCount = 2;
+	private Integer userCount = 1;
 	private MainFrame mainFrame;
 	
 	public StartPanel(MainFrame mainFrame) {
@@ -28,7 +28,7 @@ public class StartPanel extends JPanel implements ActionListener {
 		lblFantasyFootball.setAlignmentX(CENTER_ALIGNMENT);
 		add(lblFantasyFootball);
 		
-		String[] possibleUserCount= {"2","3","4","5","6"};
+		String[] possibleUserCount= {"1","2","3","4","5","6"};
 		JComboBox selectUserCount = new JComboBox(possibleUserCount);
 		selectUserCount.setBounds(425, 250, 50, 20);
 		selectUserCount.setAlignmentX(CENTER_ALIGNMENT);
