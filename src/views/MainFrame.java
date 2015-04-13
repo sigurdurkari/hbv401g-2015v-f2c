@@ -90,14 +90,29 @@ public class MainFrame extends JFrame implements ActionListener {
 		getContentPane().removeAll();
 		getContentPane().invalidate();
 		
-		JTabbedPane panel = new NavigationBar(game);
-		getContentPane().add(panel);
+		NavigationBar navigationBar = new NavigationBar(game);
+		getContentPane().add(navigationBar);
 		getContentPane().revalidate();
 
-		JButton btn = new JButton("Next turn");
-		btn.addActionListener(this);
-		btn.setBounds(650,550,150,50);
-		panel.add(btn);
+		JButton btn1 = new JButton("Next turn");
+		btn1.addActionListener(this);
+		btn1.setBounds(650,550,150,50);
+		navigationBar.getMyRosterView().add(btn1);
+		
+		JButton btn2 = new JButton("Next turn");
+		btn2.addActionListener(this);
+		btn2.setBounds(650,550,150,50);
+		navigationBar.getMarketView().add(btn2);
+		
+		JButton btn3 = new JButton("Next turn");
+		btn3.addActionListener(this);
+		btn3.setBounds(650,550,150,50);
+		navigationBar.getStandingsView().add(btn3);
+		
+		JButton btn4 = new JButton("Next turn");
+		btn4.addActionListener(this);
+		btn4.setBounds(650,550,150,50);
+		navigationBar.getStatisticsView().add(btn4);
 	}
 	
 	public void setEndPanel() {
@@ -175,6 +190,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(panel.getRoster().isLegal()) {
+				panel.updateUserName();
+				panel.updateRosterName();
 				panel.setActiveUser();
 				frame.nextPanel();
 			}

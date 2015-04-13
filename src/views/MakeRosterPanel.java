@@ -20,6 +20,7 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 	private Game game;
 	private String user;
 	private String rosterName;
+	JTextField userName,rstrName;
 	private List<MockPlayer> playersList = new ArrayList<>();
 	private DefaultListModel<MockPlayer> rosterModel = new DefaultListModel<>();
 	private JList<MockPlayer> roster = new JList<MockPlayer>(rosterModel);
@@ -36,9 +37,9 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		selectBtn.addActionListener(this);
 		JButton deselectBtn = new JButton("Deselect player");
 		deselectBtn.addActionListener(this);
-		JTextField userName = new JTextField("nafn notanda");
+		userName = new JTextField("nafn notanda");
 		userName.getDocument().addDocumentListener(new TextFieldListener(user, userName));
-		JTextField rstrName = new JTextField("nafn liðs");
+		rstrName = new JTextField("nafn liðs");
 		rstrName.getDocument().addDocumentListener(new TextFieldListener(rosterName, rstrName));
 		Box nameBox = Box.createVerticalBox();
 		nameBox.setBounds(50, 50, 150, 60);
@@ -112,8 +113,16 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		return user;
 	}
 	
+	public void updateUserName() {
+		user = userName.getText();
+	}
+	
 	public String getRosterName(){
 		return rosterName;
+	}
+	
+	public void updateRosterName() {
+		rosterName = rstrName.getText();
 	}
 	
 	public Roster getRoster(){
@@ -140,6 +149,7 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		ArrayList<MockPlayer> rosterList = Collections.list(rosterModel.elements());
 		r.setPlayers(rosterList);
 		u.setRoster(r);
+		u.setFinancialStatus(financialStatus);
 		return u;
 	}
 	
@@ -149,7 +159,7 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		u1.setUserName(u2.getUserName());
 		u1.setRoster(u2.getRoster());
 		u1.setUserScore(new Integer(0));
-		u1.setFinancialStatus(Game.STARTING_CASH);
+		u1.setFinancialStatus(u2.getFinancialStatus());
 		u1.setUserStats(new UserStats());
 	}
 	
