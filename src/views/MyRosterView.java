@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JLabel;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -433,6 +434,9 @@ public class MyRosterView extends JPanel implements ActionListener {
 		onFieldList.setVisibleRowCount(15);
 		subsList.setCellRenderer(new RosterCellRender());
 		subsList.setVisibleRowCount(5);
+		
+		onFieldList.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		subsList.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		for(MockPlayer p : currentUser.getRoster().getOnField()) {
 			onFieldModel.addElement(p);

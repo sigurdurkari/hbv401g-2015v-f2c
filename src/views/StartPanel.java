@@ -11,37 +11,36 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-public class StartPanel implements ActionListener {
+import tests.BasicEntities;
+
+public class StartPanel extends JPanel implements ActionListener {
 	
-	private Integer userCount = 2;
+	private Integer userCount = 1;
 	private MainFrame mainFrame;
 	
 	public StartPanel(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
-	}
 	
-	public JPanel createStartPanel() {
-		JPanel startPanel = new JPanel();
-		startPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		startPanel.setLayout(null);
+		setLayout(null);
 		
 		JLabel lblFantasyFootball = new JLabel("Fantasy Football", JLabel.CENTER);
-		lblFantasyFootball.setBounds(125, 70, 200, 15);
-		startPanel.add(lblFantasyFootball);
+		lblFantasyFootball.setBounds(350, 200, 200, 15);
+		lblFantasyFootball.setAlignmentX(CENTER_ALIGNMENT);
+		add(lblFantasyFootball);
 		
-		String[] possibleUserCount= {"2","3","4","5","6"};
+		String[] possibleUserCount= {"1","2","3","4","5","6"};
 		JComboBox selectUserCount = new JComboBox(possibleUserCount);
-		selectUserCount.setBounds(200, 130, 50, 20);
+		selectUserCount.setBounds(425, 250, 50, 20);
 		selectUserCount.setSize(70,40);
+		selectUserCount.setAlignmentX(CENTER_ALIGNMENT);
 		selectUserCount.addActionListener(this);
-		startPanel.add(selectUserCount);
+		add(selectUserCount);
 		
 		JButton btnStart = new JButton("Start Game");
-		btnStart.setBounds(165, 170, 120, 40);
+		btnStart.setBounds(375, 400, 150, 50);
 		btnStart.addActionListener(this);
-		startPanel.add(btnStart);
+		add(btnStart);
 		
-		return startPanel;
 	}
 	
 	@Override
@@ -51,7 +50,7 @@ public class StartPanel implements ActionListener {
 			String userCountString = (String)cb.getSelectedItem();
 			setUserCount(Integer.parseInt(userCountString));
 		} else if(e.getSource() instanceof JButton) {
-			mainFrame.setGame(startGame());
+			startGame();
 			mainFrame.nextPanel();
 		}
 	}
@@ -64,14 +63,14 @@ public class StartPanel implements ActionListener {
 		this.userCount = userCount;
 	}
 	
-	public Game startGame() {
+	public void startGame() {
 		List<MockTeam> teams = generateTeams();
 		List<User> users = new ArrayList<>();
 		for(int i=0; i<userCount; i++) {
 			User u = new User("", new Integer(0), Game.STARTING_CASH, new Roster());
 			users.add(u);
 		}
-		return new Game(users, teams);
+		mainFrame.setGame(new Game(users, teams));
 	}
 
 }

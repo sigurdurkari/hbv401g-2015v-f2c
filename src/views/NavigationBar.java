@@ -13,16 +13,19 @@ public class NavigationBar extends JTabbedPane implements ChangeListener {
 
 	private static final long serialVersionUID = 1L;
 	private MyRosterView myRosterView;
+	private MarketView marketView;
+	private StandingsView standingsView;
+	private StatisticsView statisticsView;
 	
 
 	public NavigationBar(Game game) {
 		myRosterView = new MyRosterView(game);
-		addTab("My Roster",myRosterView);
-		JPanel marketView = new MarketView(game);
+		addTab("My Roster", myRosterView);
+		marketView = new MarketView(game);
 		addTab("Market", marketView);
-		JPanel standingsView = new StandingsView(game);
+		standingsView = new StandingsView(game);
 		addTab("Standings",standingsView);
-		JTabbedPane statisticsView = new StatisticsView(game);
+		statisticsView = new StatisticsView(game);
 		addTab("Statistics", statisticsView);
 
 		addChangeListener(this);
@@ -33,6 +36,38 @@ public class NavigationBar extends JTabbedPane implements ChangeListener {
 		myRosterView.refresh();
 	}
 	
+	public MyRosterView getMyRosterView() {
+		return myRosterView;
+	}
+
+	public void setMyRosterView(MyRosterView myRosterView) {
+		this.myRosterView = myRosterView;
+	}
+
+	public MarketView getMarketView() {
+		return marketView;
+	}
+
+	public void setMarketView(MarketView marketView) {
+		this.marketView = marketView;
+	}
+
+	public StandingsView getStandingsView() {
+		return standingsView;
+	}
+
+	public void setStandingsView(StandingsView standingsView) {
+		this.standingsView = standingsView;
+	}
+
+	public StatisticsView getStatisticsView() {
+		return statisticsView;
+	}
+
+	public void setStatisticsView(StatisticsView statisticsView) {
+		this.statisticsView = statisticsView;
+	}
+
 	public static void main(String[] args){
 		Game game = BasicEntities.generateGame();
 		JFrame frame = new JFrame();

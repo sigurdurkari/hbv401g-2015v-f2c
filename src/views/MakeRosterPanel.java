@@ -2,20 +2,25 @@ package views;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.event.*;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.swing.*;
 
+import tests.BasicEntities;
 import models.*;
 
 
 public class MakeRosterPanel extends JPanel implements ActionListener {
 	
+	private Game game;
 	private String user;
 	private String rosterName;
+	JTextField userName,rstrName;
 	private List<MockPlayer> playersList = new ArrayList<>();
 	private DefaultListModel<MockPlayer> rosterModel = new DefaultListModel<>();
 	private JList<MockPlayer> roster = new JList<MockPlayer>(rosterModel);
@@ -24,16 +29,17 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 	private JLabel currentFinancialStatus = new JLabel();
 	
 
-	public MakeRosterPanel() {
+	public MakeRosterPanel(Game game) {
+		this.game = game;
 		financialStatus = Game.STARTING_CASH;
 		setLayout(null);
 		JButton selectBtn = new JButton("Select player");
 		selectBtn.addActionListener(this);
 		JButton deselectBtn = new JButton("Deselect player");
 		deselectBtn.addActionListener(this);
-		JTextField userName = new JTextField("nafn notanda");
+		userName = new JTextField("nafn notanda");
 		userName.getDocument().addDocumentListener(new TextFieldListener(user, userName));
-		JTextField rstrName = new JTextField("nafn liðs");
+		rstrName = new JTextField("nafn liðs");
 		rstrName.getDocument().addDocumentListener(new TextFieldListener(rosterName, rstrName));
 		Box nameBox = Box.createVerticalBox();
 		nameBox.setBounds(50, 50, 150, 60);
@@ -72,7 +78,7 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 			team2.addPlayer(new MockPlayer("UnitedPlayer" + i, "Manchester United", Roster.positions[(i+1)%4], 100*(i%7 + 1)));
 		}
 
-		playersList = team1.getPlayers();
+		playersList = game.getPlayers();
 		
 		players = new JList<MockPlayer>(playersList.toArray(new MockPlayer[playersList.size()]));
 		
@@ -107,16 +113,26 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		return user;
 	}
 	
+	public void updateUserName() {
+		user = userName.getText();
+	}
+	
 	public String getRosterName(){
 		return rosterName;
 	}
 	
-	public List<MockPlayer> getRoster(){
+	public void updateRosterName() {
+		rosterName = rstrName.getText();
+	}
+	
+	public Roster getRoster(){
 		List<MockPlayer> list = new ArrayList<>();
 		for(int i=0;i<rosterModel.getSize();i++ ){
 			list.add(rosterModel.getElementAt(i));
 		}
-		return list;
+		Roster roster = new Roster(getRosterName());
+		roster.setPlayers(list);
+		return roster;
 	}
 	
 	public void setUserName(String name){
@@ -127,6 +143,25 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		rosterName=name;
 	}
 	
+	public User getUser() {
+		User u = new User(user);
+		Roster r = new Roster(rosterName);
+		ArrayList<MockPlayer> rosterList = Collections.list(rosterModel.elements());
+		r.setPlayers(rosterList);
+		u.setRoster(r);
+		u.setFinancialStatus(financialStatus);
+		return u;
+	}
+	
+	public void setActiveUser() {
+		User u1 = game.getUsers().get(game.getActiveUser());
+		User u2 = getUser();
+		u1.setUserName(u2.getUserName());
+		u1.setRoster(u2.getRoster());
+		u1.setUserScore(new Integer(0));
+		u1.setFinancialStatus(u2.getFinancialStatus());
+		u1.setUserStats(new UserStats());
+	}
 	
 	public static class PlayerCellRender extends JPanel implements ListCellRenderer{
 		/**
@@ -246,12 +281,13 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 	
 	
 	public static void main(String[] args){
+		Game game = BasicEntities.generateGame();
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
 		frame.setSize(900,700);
-		JPanel panel = new MakeRosterPanel();
+		JPanel panel = new MakeRosterPanel(game);
 		frame.add(panel);
 		frame.setVisible(true);
 		frame.setContentPane(panel);

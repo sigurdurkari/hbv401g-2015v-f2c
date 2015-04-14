@@ -89,12 +89,17 @@ public class Game {
 		this.activeUser = activeUser;
 	}
 	
-	public void setSActiveUserName(String name) {
+	public void setActiveUserName(String name) {
 		users.get(activeUser).setUserName(name);
 	}
 	
 	public void setRosterName(String name) {
 		users.get(activeUser).getRoster().setName(name);
+	}
+	
+	public void setActiveUser(User user) {
+		User u = users.get(activeUser);
+		u = new User(user.getUserName(), new Integer(0), STARTING_CASH, user.getRoster());
 	}
 	
 	public void updateUserStats() {
@@ -103,8 +108,96 @@ public class Game {
 		}
 	}
 	
+	public List<MockPlayer> getDreamTeam() {
+		if(activeRound<=1) {
+			return new ArrayList<>();
+		}
+		List<MockPlayer> dreamTeam = new ArrayList<>();
+		List<MockPlayer> goalkeepers = getPlayersByPosition(getPlayers(), PlayerPosition.GOAL);
+		sortByScore(goalkeepers);
+		List<MockPlayer> defenders = getPlayersByPosition(getPlayers(), PlayerPosition.DEFENCE);
+		sortByScore(defenders);
+		List<MockPlayer> midfielders = getPlayersByPosition(getPlayers(), PlayerPosition.MIDFIELD);
+		sortByScore(midfielders);
+		List<MockPlayer> forwards = getPlayersByPosition(getPlayers(), PlayerPosition.FORWARD);
+		sortByScore(forwards);
+		dreamTeam.add(goalkeepers.get(0));
+		goalkeepers.remove(0);
+		dreamTeam.addAll(defenders.subList(0,2));
+		defenders.removeAll(defenders.subList(0,2));
+		dreamTeam.addAll(midfielders.subList(0,2));
+		midfielders.removeAll(midfielders.subList(0,2));
+		dreamTeam.add(forwards.get(0));
+		forwards.remove(0);
+		List<MockPlayer> restOfPlayers = new ArrayList<>();
+		restOfPlayers.addAll(defenders.subList(0,3));
+		restOfPlayers.addAll(midfielders.subList(0,3));
+		restOfPlayers.addAll(forwards.subList(0,2));
+		sortByScore(restOfPlayers);
+		dreamTeam.addAll(restOfPlayers.subList(0,5));
+		return dreamTeam;
+	}
+	
+	public List<MockPlayer> getDreamTeam(int round) {
+		if(activeRound<=round) {
+			return new ArrayList<>();
+		}
+		List<MockPlayer> dreamTeam = new ArrayList<>();
+		List<MockPlayer> goalkeepers = getPlayersByPosition(getPlayers(), PlayerPosition.GOAL);
+		sortByRoundScore(goalkeepers, round);
+		List<MockPlayer> defenders = getPlayersByPosition(getPlayers(), PlayerPosition.DEFENCE);
+		sortByRoundScore(defenders, round);
+		List<MockPlayer> midfielders = getPlayersByPosition(getPlayers(), PlayerPosition.MIDFIELD);
+		sortByRoundScore(midfielders, round);
+		List<MockPlayer> forwards = getPlayersByPosition(getPlayers(), PlayerPosition.FORWARD);
+		sortByRoundScore(forwards, round);
+		dreamTeam.add(goalkeepers.get(0));
+		goalkeepers.remove(0);
+		dreamTeam.addAll(defenders.subList(0,2));
+		defenders.removeAll(defenders.subList(0,2));
+		dreamTeam.addAll(midfielders.subList(0,2));
+		midfielders.removeAll(midfielders.subList(0,2));
+		dreamTeam.add(forwards.get(0));
+		forwards.remove(0);
+		List<MockPlayer> restOfPlayers = new ArrayList<>();
+		restOfPlayers.addAll(defenders.subList(0,3));
+		restOfPlayers.addAll(midfielders.subList(0,3));
+		restOfPlayers.addAll(forwards.subList(0,2));
+		sortByRoundScore(restOfPlayers, round);
+		dreamTeam.addAll(restOfPlayers.subList(0,5));
+		return dreamTeam;
+	}
+	
+	private List<MockPlayer> getPlayersByPosition(List<MockPlayer> players, PlayerPosition pos) {
+		List<MockPlayer> playersByPos = new ArrayList<>();
+		for(MockPlayer p : players) {
+			if(p.getPosition()==pos) {
+				playersByPos.add(p);
+			}
+		}
+		return playersByPos;
+	}
+	
+	private void sortByScore(List<MockPlayer> players){
+		Collections.sort(players, new Comparator<MockPlayer>() {
+			@Override
+			public int compare(MockPlayer lhs, MockPlayer rhs) {
+				return -lhs.getTotalScore().compareTo(rhs.getTotalScore());
+			}
+		});
+	}
+	
+	private void sortByRoundScore(List<MockPlayer> players, final int round){
+		Collections.sort(players, new Comparator<MockPlayer>() {
+			@Override
+			public int compare(MockPlayer lhs, MockPlayer rhs) {
+				return -lhs.getScores()[round-1].compareTo(rhs.getScores()[round-1]);
+			}
+		});
+	}
+	
 	public void nextTurn() {
+		activeRound += (activeUser+1)/userCount;
 		activeUser = (activeUser+1)%userCount;
-		activeRound = activeRound + (activeUser+1)/userCount;
 	}
 }

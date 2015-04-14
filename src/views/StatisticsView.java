@@ -16,16 +16,17 @@ public class StatisticsView extends JTabbedPane {
 	private User currentUser;
 	private UserStats userStats;
 	private JList<UserStats.PlayerStats> playerStatsList = new JList<>();
+	private JPanel rosterPanel, playerPanel;
 	
 	public StatisticsView(Game game) {
 		this.game = game;
 		this.currentUser = game.getUsers().get(game.getActiveUser());
 		this.userStats = currentUser.getUserStats();
 		
-		JPanel rosterPanel = new JPanel();
+		rosterPanel = new JPanel();
 		addTab("My roster statistics",rosterPanel);
 		rosterPanel.setLayout(null);
-		JPanel playerPanel = new JPanel();
+		playerPanel = new JPanel();
 		addTab("All player statistics",playerPanel);
 		playerPanel.setLayout(null);
 		
@@ -142,6 +143,22 @@ public class StatisticsView extends JTabbedPane {
 		playerBox.add(playerScroll);
 	}
 	
+	public JPanel getRosterPanel() {
+		return rosterPanel;
+	}
+
+	public void setRosterPanel(JPanel rosterPanel) {
+		this.rosterPanel = rosterPanel;
+	}
+
+	public JPanel getPlayerPanel() {
+		return playerPanel;
+	}
+
+	public void setPlayerPanel(JPanel playerPanel) {
+		this.playerPanel = playerPanel;
+	}
+
 	public static class StatsCellRender extends JPanel implements ListCellRenderer{
 		/**
 		 * 
