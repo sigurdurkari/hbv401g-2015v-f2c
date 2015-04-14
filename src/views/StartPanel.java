@@ -32,6 +32,7 @@ public class StartPanel implements ActionListener {
 		String[] possibleUserCount= {"2","3","4","5","6"};
 		JComboBox selectUserCount = new JComboBox(possibleUserCount);
 		selectUserCount.setBounds(200, 130, 50, 20);
+		selectUserCount.setSize(70,40);
 		selectUserCount.addActionListener(this);
 		startPanel.add(selectUserCount);
 		
