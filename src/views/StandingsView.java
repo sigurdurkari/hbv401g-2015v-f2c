@@ -21,8 +21,14 @@ public class StandingsView extends JPanel{
 		setLayout(null);
 		this.game=game;
 		
-		Box listBox = Box.createHorizontalBox();
-		listBox.setBounds(50,150,700,300);
+		Box teamBox = Box.createVerticalBox();
+		teamBox.setBounds(100,150,300,300);
+		
+		Box userBox = Box.createVerticalBox();
+		userBox.setBounds(100,350,300,300);
+		
+		JLabel teamLbl = new JLabel("Team Standings:");
+		JLabel userLbl = new JLabel("User Standings:");
 		
 		Collections.sort(game.getUsers());
 		Collections.sort(game.getTeams());
@@ -35,10 +41,13 @@ public class StandingsView extends JPanel{
 		teamList.setCellRenderer(new TeamCellRender());
 		teamList.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
-		listBox.add(userList);
-		listBox.add(teamList);
+		userBox.add(userLbl);
+		teamBox.add(teamLbl);
+		userBox.add(userList);
+		teamBox.add(teamList);
 		
-		add(listBox);
+		add(teamBox);
+		add(userBox);
 	}
 	
 	
