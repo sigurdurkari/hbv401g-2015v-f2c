@@ -1,2 +1,2 @@
 # Fantasy Football.
-Project in Software Development, Univeristy of Iceland.
+Project in Software Development, University of Iceland.
