@@ -1,7 +1,2 @@
-# Fantasy football user interface
-
-This project is best project. 
-
-Sick bruh.
-
-<3
+Fantasy Football.
+Project in Software Development, Univeristy of Iceland.
