@@ -118,6 +118,13 @@ public class MainFrame extends JFrame implements ActionListener {
 		btn5.addActionListener(new NavigationBarListener(game,this));
 		btn5.setBounds(680,50,150,40);
 		navigationBar.getStatisticsView().getPlayerPanel().add(btn5);
+		
+		for(int i=0; i<9; i++) {
+			JButton btn = new JButton("Next turn");
+			btn.addActionListener(new NavigationBarListener(game,this));
+			btn.setBounds(680,50,150,40);
+			navigationBar.getScheduleView().getPanels()[i].add(btn);
+		}
 	}
 	
 	public void setEndPanel() {
@@ -145,7 +152,7 @@ public class MainFrame extends JFrame implements ActionListener {
 				break;
 			case NAVIGATION_BAR:
 				game.nextTurn();
-				if(game.getActiveRound()>10) {
+				if(game.getActiveRound()>=10) {
 					setActivePanel(ActivePanel.END_GAME);
 					setEndPanel();
 				} else {

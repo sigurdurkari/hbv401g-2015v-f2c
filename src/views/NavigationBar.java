@@ -16,6 +16,7 @@ public class NavigationBar extends JTabbedPane implements ChangeListener {
 	private MarketView marketView;
 	private StandingsView standingsView;
 	private StatisticsView statisticsView;
+	private ScheduleView scheduleView;
 	
 
 	public NavigationBar(Game game) {
@@ -27,6 +28,8 @@ public class NavigationBar extends JTabbedPane implements ChangeListener {
 		addTab("Standings",standingsView);
 		statisticsView = new StatisticsView(game);
 		addTab("Statistics", statisticsView);
+		scheduleView = new ScheduleView(game);
+		addTab("Schedule", scheduleView);
 
 		addChangeListener(this);
 	}
@@ -66,6 +69,14 @@ public class NavigationBar extends JTabbedPane implements ChangeListener {
 
 	public void setStatisticsView(StatisticsView statisticsView) {
 		this.statisticsView = statisticsView;
+	}
+
+	public ScheduleView getScheduleView() {
+		return scheduleView;
+	}
+
+	public void setScheduleView(ScheduleView scheduleView) {
+		this.scheduleView = scheduleView;
 	}
 
 	public static void main(String[] args){

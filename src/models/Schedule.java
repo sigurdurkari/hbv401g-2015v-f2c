@@ -27,6 +27,7 @@ public class Schedule {
 	            int away = indexes[indexes.length - 1 - i];
 				matches.add(new ScheduledMatch(teams.get(home),teams.get(away),new Integer(week+1)));
 			}
+			indexes = scheduleIndexes(indexes);
 		}
 		teams.remove(ghost);
 		for(ScheduledMatch match : matches) {
@@ -81,14 +82,20 @@ public class Schedule {
 	public void playRound(int round) {
 		List<ScheduledMatch> matches = getMatchesByWeek(round);
 		for(ScheduledMatch m : matches) {
-			int randomFactor = (int)(Math.random()*3-1);
-			if(randomFactor == -1) {
+			double randomFactor = Math.random()*3;
+			if(randomFactor < 1) {
 				m.getHome().addScore(3);
-			} else if(randomFactor == 0) {
+				m.setHomeGoals(1);
+				m.setAwayGoals(0);
+			} else if(randomFactor < 2) {
 				m.getHome().addScore(1);
 				m.getAway().addScore(1);
-			} else if(randomFactor == 1) {
+				m.setHomeGoals(0);
+				m.setAwayGoals(0);
+			} else if(randomFactor < 3) {
 				m.getAway().addScore(3);
+				m.setHomeGoals(0);
+				m.setAwayGoals(1);
 			}
 		}
 	}

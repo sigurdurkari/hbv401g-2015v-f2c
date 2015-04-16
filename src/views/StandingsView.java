@@ -2,7 +2,9 @@ package views;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.event.*;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,12 +16,22 @@ import models.*;
 public class StandingsView extends JPanel{
 	
 	private Game game;
+	private User currentUser;
 	private JList<User> userList;
 	private JList<MockTeam> teamList;
 	
 	public StandingsView(Game game){
 		setLayout(null);
 		this.game=game;
+		this.currentUser = game.getUsers().get(game.getActiveUser());
+		
+		JLabel userName = new JLabel(currentUser.getUserName());
+		JLabel rstrName = new JLabel(currentUser.getRoster().getName());
+		Box nameBox = Box.createVerticalBox();
+		nameBox.setBounds(50, 50, 150, 60);
+		add(nameBox);
+		nameBox.add(userName);
+		nameBox.add(rstrName);
 		
 		Box teamBox = Box.createVerticalBox();
 		teamBox.setBounds(100,150,300,300);

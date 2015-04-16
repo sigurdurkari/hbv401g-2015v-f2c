@@ -4,6 +4,7 @@ public class ScheduledMatch {
 	
 	private MockTeam home, away;
 	private Integer week;
+	private Integer homeGoals, awayGoals;
 	
 	public ScheduledMatch() {}
 	
@@ -35,6 +36,22 @@ public class ScheduledMatch {
 
 	public void setWeek(Integer week) {
 		this.week = week;
+	}
+
+	public Integer getHomeGoals() {
+		return homeGoals;
+	}
+
+	public void setHomeGoals(Integer homeGoals) {
+		this.homeGoals = homeGoals;
+	}
+
+	public Integer getAwayGoals() {
+		return awayGoals;
+	}
+
+	public void setAwayGoals(Integer awayGoals) {
+		this.awayGoals = awayGoals;
 	}
 	
 }
