@@ -37,9 +37,9 @@ public class MakeRosterPanel extends JPanel implements ActionListener {
 		selectBtn.addActionListener(this);
 		JButton deselectBtn = new JButton("Deselect player");
 		deselectBtn.addActionListener(this);
-		userName = new JTextField("nafn notanda");
+		userName = new JTextField("User name");
 		userName.getDocument().addDocumentListener(new TextFieldListener(user, userName));
-		rstrName = new JTextField("nafn liðs");
+		rstrName = new JTextField("Team name");
 		rstrName.getDocument().addDocumentListener(new TextFieldListener(rosterName, rstrName));
 		Box nameBox = Box.createVerticalBox();
 		nameBox.setBounds(50, 50, 150, 60);

@@ -196,7 +196,19 @@ public class Game {
 		});
 	}
 	
+	private void completeDemoRound() {
+		for(MockPlayer p : getPlayers()) {
+			p.getScores()[activeRound] = (int)(21*Math.random());
+		}
+		for(User u : users) {
+			u.updateUserStats(activeRound);
+		}
+	}
+	
 	public void nextTurn() {
+		if((activeUser+1)/userCount > 0) {
+			completeDemoRound();
+		}
 		activeRound += (activeUser+1)/userCount;
 		activeUser = (activeUser+1)%userCount;
 	}
