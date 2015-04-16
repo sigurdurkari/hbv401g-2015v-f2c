@@ -69,7 +69,7 @@ public class User implements Comparable<User>{
 	
 	public void updateUserStats(int round) {
 		for(MockPlayer p : roster.getPlayers()) {
-			userStats.updatePlayerStats(p, round, roster.getSubs().contains(p), roster.getCaptain().equals(p));
+			userStats.updatePlayerStats(p, round, roster.getSubs().contains(p), roster.getCaptain()==null ? false : roster.getCaptain().equals(p));
 		}
 	}
 

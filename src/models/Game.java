@@ -198,7 +198,7 @@ public class Game {
 	
 	private void completeDemoRound() {
 		for(MockPlayer p : getPlayers()) {
-			p.getScores()[activeRound] = (int)(21*Math.random());
+			p.getScores()[activeRound-1] = (int)(21*Math.random());
 		}
 		for(User u : users) {
 			u.updateUserStats(activeRound);
@@ -206,7 +206,7 @@ public class Game {
 	}
 	
 	public void nextTurn() {
-		if((activeUser+1)/userCount > 0) {
+		if((activeUser+1)/userCount > 0 && activeRound > 0) {
 			completeDemoRound();
 		}
 		activeRound += (activeUser+1)/userCount;

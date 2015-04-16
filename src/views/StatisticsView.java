@@ -98,7 +98,7 @@ public class StatisticsView extends JTabbedPane {
 			UserStats.PlayerStats p = userStats.getPlayerStats().get(i);
 			rowData[i][0] = p.getPlayer().getName();
 			for(int j=1;j<=10;j++) {
-				rowData[i][j] = p.getStats()[j+1];
+				rowData[i][j] = p.getStats()[j-1];
 			}
 			rowData[i][11] = p.getTotalScoreString();
 		}
