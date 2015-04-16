@@ -13,7 +13,7 @@ public class MockTeam implements Comparable<MockTeam>{
 	
 	public MockTeam(String name) {
 		this.name = name;
-		score = (int)(Math.random()*30);
+		this.score = new Integer(0);
 	}
 
 	public String getName() {
@@ -22,6 +22,10 @@ public class MockTeam implements Comparable<MockTeam>{
 	
 	public Integer getScore(){
 		return score;
+	}
+	
+	public void addScore(int points) {
+		score = score + points;
 	}
 
 	public void setName(String name) {

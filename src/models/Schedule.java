@@ -20,10 +20,11 @@ public class Schedule {
 		if(teams.size()%2==1) {
 			teams.add(ghost);
 		}
+		int[] indexes = scheduleIndexes(teams.size());
 		for(int week=0; week<teams.size()-1; week++) {
 			for(int i=0; i<teams.size()/2; i++) {
-				int home = (week + i) % (teams.size() - 1);
-	            int away = (teams.size() - 1 - i + week) % (teams.size() - 1);
+				int home = indexes[i];
+	            int away = indexes[indexes.length - 1 - i];
 				matches.add(new ScheduledMatch(teams.get(home),teams.get(away),new Integer(week+1)));
 			}
 		}
@@ -70,10 +71,43 @@ public class Schedule {
 	public List<ScheduledMatch> getMatchesByWeek(int week) {
 		List<ScheduledMatch> weekMatches = new ArrayList<>();
 		for(ScheduledMatch match : this.matches) {
-			if(week == match.week.intValue()) {
+			if(week == match.getWeek().intValue()) {
 				weekMatches.add(match);
 			}
 		}
 		return weekMatches;
+	}
+	
+	public void playRound(int round) {
+		List<ScheduledMatch> matches = getMatchesByWeek(round);
+		for(ScheduledMatch m : matches) {
+			int randomFactor = (int)(Math.random()*3-1);
+			if(randomFactor == -1) {
+				m.getHome().addScore(3);
+			} else if(randomFactor == 0) {
+				m.getHome().addScore(1);
+				m.getAway().addScore(1);
+			} else if(randomFactor == 1) {
+				m.getAway().addScore(3);
+			}
+		}
+	}
+	
+	private int[] scheduleIndexes(int n) {
+		int[] indexes = new int[n];
+		for(int i=0; i<n; i++) {
+			indexes[i] = i;
+		}
+		return indexes;
+	}
+	
+	private int[] scheduleIndexes(int[] indexes) {
+		int[] newIndexes = new int[indexes.length];
+		newIndexes[0] = indexes[0];
+		newIndexes[1] = indexes[indexes.length-1];
+		for(int i=2; i<indexes.length; i++) {
+			newIndexes[i] = indexes[i-1];
+		}
+		return newIndexes;
 	}
 }

@@ -203,6 +203,7 @@ public class Game {
 		for(User u : users) {
 			u.updateUserStats(activeRound);
 		}
+		schedule.playRound(activeRound);
 	}
 	
 	public void nextTurn() {

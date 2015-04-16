@@ -72,6 +72,7 @@ public class User implements Comparable<User>{
 			userStats.updatePlayerStats(p, round, roster.getSubs().contains(p), roster.getCaptain()==null ? false : roster.getCaptain().equals(p));
 		}
 		userStats.updateStatsForSoldPlayers(roster.getPlayers(), round);
+		userScore = userStats.getTotalScore();
 	}
 
 	public void updateFinancialStatus(int diff) {

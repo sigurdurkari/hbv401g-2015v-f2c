@@ -2,8 +2,8 @@ package models;
 
 public class ScheduledMatch {
 	
-	public MockTeam home, away;
-	public Integer week;
+	private MockTeam home, away;
+	private Integer week;
 	
 	public ScheduledMatch() {}
 	
