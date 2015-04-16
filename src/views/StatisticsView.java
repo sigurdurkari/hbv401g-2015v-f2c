@@ -119,7 +119,14 @@ public class StatisticsView extends JTabbedPane {
 		playerBox.setBounds(50,120,800,400);
 		playerPanel.add(playerBox);
 		
-		List<MockPlayer> players = game.getPlayers();
+		List<MockPlayer> players = new ArrayList<>();
+		players.addAll(game.getPlayers());
+		Collections.sort(players, new Comparator<MockPlayer>() {
+			@Override
+			public int compare(MockPlayer lhs, MockPlayer rhs) {
+				return -lhs.getTotalScore().compareTo(rhs.getTotalScore());
+			}
+		});
 		Object[][] rowData2 = new Object[game.getPlayers().size()][12];
 		for(int i=0; i<players.size(); i++) {
 			MockPlayer p = players.get(i);

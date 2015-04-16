@@ -199,6 +199,7 @@ public class MainFrame extends JFrame implements ActionListener {
 				panel.updateRosterName();
 				panel.setActiveUser();
 				frame.nextPanel();
+				panel = null;
 			}
 		}
 	}

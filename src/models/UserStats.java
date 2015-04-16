@@ -168,6 +168,14 @@ public class UserStats {
 		sort();
 	}
 	
+	public void updateStatsForSoldPlayers(List<MockPlayer> rosterPlayers, int round) {
+		for(PlayerStats p : playerStats) {
+			if(!rosterPlayers.contains(p.player)) {
+				p.setWeekStats(round, "-");
+			}
+		}
+	}
+	
 	public void sort() {
 		Collections.sort(playerStats, new Comparator<PlayerStats>() {
 			@Override
