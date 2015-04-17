@@ -411,6 +411,9 @@ public class MyRosterView extends JPanel implements ActionListener {
 		gbc_btnBench11.gridy = 12;
 		add(btnBench11, gbc_btnBench11);*/
 		
+		JLabel roundLabel = new JLabel("Round " + game.getActiveRound());
+		roundLabel.setBounds(50, 15, 150, 30);
+		add(roundLabel);
 		
 		JLabel userName = new JLabel(currentUser.getUserName());
 		JLabel rstrName = new JLabel(currentUser.getRoster().getName());

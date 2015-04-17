@@ -33,6 +33,10 @@ public class StandingsView extends JPanel{
 		nameBox.add(userName);
 		nameBox.add(rstrName);
 		
+		JLabel roundLabel = new JLabel("Round " + game.getActiveRound());
+		roundLabel.setBounds(50, 15, 150, 30);
+		add(roundLabel);
+		
 		Box teamBox = Box.createVerticalBox();
 		teamBox.setBounds(100,150,300,300);
 		

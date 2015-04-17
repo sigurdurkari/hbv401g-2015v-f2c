@@ -40,6 +40,10 @@ public class ScheduleView extends JTabbedPane {
 			nameBox.add(userName);
 			nameBox.add(rstrName);
 			
+			JLabel roundLabel = new JLabel("Round " + game.getActiveRound());
+			roundLabel.setBounds(50, 15, 150, 30);
+			panel.add(roundLabel);
+			
 			Box matchBox = Box.createVerticalBox();
 			panel.add(matchBox);
 			matchBox.setBounds(100,150,700,400);

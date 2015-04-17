@@ -1,6 +1,7 @@
 package views;
 
 import javax.swing.*;
+
 import java.util.*;
 import java.util.List;
 
@@ -38,6 +39,10 @@ public class StatisticsView extends JTabbedPane {
 		nameBox.add(userName);
 		nameBox.add(rstrName);
 		
+		JLabel roundLabel = new JLabel("Round " + game.getActiveRound());
+		roundLabel.setBounds(50, 15, 150, 30);
+		rosterPanel.add(roundLabel);
+		
 		JLabel userName2 = new JLabel(currentUser.getUserName());
 		JLabel rstrName2 = new JLabel(currentUser.getRoster().getName());
 		Box nameBox2 = Box.createVerticalBox();
@@ -45,6 +50,10 @@ public class StatisticsView extends JTabbedPane {
 		playerPanel.add(nameBox2);
 		nameBox2.add(userName2);
 		nameBox2.add(rstrName2);
+
+		JLabel roundLabel1 = new JLabel("Round " + game.getActiveRound());
+		roundLabel1.setBounds(50, 15, 150, 30);
+		playerPanel.add(roundLabel1);
 		
 		Box rosterBox = Box.createVerticalBox();
 		rosterBox.setBounds(50,120,800,400);

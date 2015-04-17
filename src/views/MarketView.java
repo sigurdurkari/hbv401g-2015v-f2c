@@ -35,6 +35,10 @@ public class MarketView extends JPanel implements ActionListener {
 		this.currentUser = game.getUsers().get(game.getActiveUser());
 		setLayout(null);
 		
+		JLabel roundLabel = new JLabel("Round " + game.getActiveRound());
+		roundLabel.setBounds(50, 15, 150, 30);
+		add(roundLabel);
+		
 		JButton buyBtn = new JButton("Set to buy");
 		buyBtn.addActionListener(this);
 		JButton unBuyBtn = new JButton("Deselect from buying");

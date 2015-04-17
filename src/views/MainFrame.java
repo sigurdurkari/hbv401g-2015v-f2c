@@ -23,6 +23,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private Game game;
 	private StartPanel startPanel;
 	private MakeRosterPanel makeRosterPanel;
+	private JLabel[] nextTurnLabels = new JLabel[14];
 
 	private JPanel contentPane;
 
@@ -95,35 +96,59 @@ public class MainFrame extends JFrame implements ActionListener {
 		getContentPane().revalidate();
 
 		JButton btn1 = new JButton("Next turn");
-		btn1.addActionListener(new NavigationBarListener(game,this));
+		btn1.addActionListener(new NavigationBarListener(game,this,nextTurnLabels));
 		btn1.setBounds(680,50,150,40);
 		navigationBar.getMyRosterView().add(btn1);
+		nextTurnLabels[0] = new JLabel("Invalid roster");
+		nextTurnLabels[0].setBounds(700,30,150,20);
+		nextTurnLabels[0].setVisible(false);
+		navigationBar.getMyRosterView().add(nextTurnLabels[0]);
 		
 		JButton btn2 = new JButton("Next turn");
-		btn2.addActionListener(new NavigationBarListener(game,this));
+		btn2.addActionListener(new NavigationBarListener(game,this,nextTurnLabels));
 		btn2.setBounds(680,50,150,40);
 		navigationBar.getMarketView().add(btn2);
+		nextTurnLabels[1] = new JLabel("Invalid roster");
+		nextTurnLabels[1].setBounds(700,30,150,20);
+		nextTurnLabels[1].setVisible(false);
+		navigationBar.getMarketView().add(nextTurnLabels[1]);
 		
 		JButton btn3 = new JButton("Next turn");
-		btn3.addActionListener(new NavigationBarListener(game,this));
+		btn3.addActionListener(new NavigationBarListener(game,this,nextTurnLabels));
 		btn3.setBounds(680,50,150,40);
 		navigationBar.getStandingsView().add(btn3);
+		nextTurnLabels[2] = new JLabel("Invalid roster");
+		nextTurnLabels[2].setBounds(700,30,150,20);
+		nextTurnLabels[2].setVisible(false);
+		navigationBar.getStandingsView().add(nextTurnLabels[2]);
 		
 		JButton btn4 = new JButton("Next turn");
-		btn4.addActionListener(new NavigationBarListener(game,this));
+		btn4.addActionListener(new NavigationBarListener(game,this,nextTurnLabels));
 		btn4.setBounds(680,50,150,40);
 		navigationBar.getStatisticsView().getRosterPanel().add(btn4);
+		nextTurnLabels[3] = new JLabel("Invalid roster");
+		nextTurnLabels[3].setBounds(700,30,150,20);
+		nextTurnLabels[3].setVisible(false);
+		navigationBar.getStatisticsView().getRosterPanel().add(nextTurnLabels[3]);
 		
 		JButton btn5 = new JButton("Next turn");
-		btn5.addActionListener(new NavigationBarListener(game,this));
+		btn5.addActionListener(new NavigationBarListener(game,this,nextTurnLabels));
 		btn5.setBounds(680,50,150,40);
 		navigationBar.getStatisticsView().getPlayerPanel().add(btn5);
+		nextTurnLabels[4] = new JLabel("Invalid roster");
+		nextTurnLabels[4].setBounds(700,30,150,20);
+		nextTurnLabels[4].setVisible(false);
+		navigationBar.getStatisticsView().getPlayerPanel().add(nextTurnLabels[4]);
 		
 		for(int i=0; i<9; i++) {
 			JButton btn = new JButton("Next turn");
-			btn.addActionListener(new NavigationBarListener(game,this));
+			btn.addActionListener(new NavigationBarListener(game,this,nextTurnLabels));
 			btn.setBounds(680,50,150,40);
 			navigationBar.getScheduleView().getPanels()[i].add(btn);
+			nextTurnLabels[5+i] = new JLabel("Invalid roster");
+			nextTurnLabels[5+i].setBounds(700,30,150,20);
+			nextTurnLabels[5+i].setVisible(false);
+			navigationBar.getScheduleView().getPanels()[i].add(nextTurnLabels[5+i]);
 		}
 	}
 	
@@ -216,17 +241,23 @@ public class MainFrame extends JFrame implements ActionListener {
 		private Game game;
 		private User currentUser;
 		private MainFrame frame;
+		private JLabel[] labels;
 		
-		public NavigationBarListener(Game game, MainFrame frame) {
+		public NavigationBarListener(Game game, MainFrame frame, JLabel[] labels) {
 			this.game = game;
 			this.currentUser = game.getUsers().get(game.getActiveUser());
 			this.frame = frame;
+			this.labels = labels;
 		}
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(currentUser.getRoster().onFieldIsLegal()) {
 				frame.nextPanel();
+			} else {
+				for(JLabel label : labels) {
+					label.setVisible(true);
+				}
 			}
 		}
 	}
